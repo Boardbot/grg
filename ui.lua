@@ -186,10 +186,10 @@ function finity.new(isdark, gprojectName, thinProject)
                 pcall(function() self2.modal.Modal = toggled end)
 
                 if toggled then
-					pcall(self2.container.TweenPosition, self2.container, savedposition, "Out", "Sine", 0.5, true)
+					pcall(self2.container.TweenPosition, self2.container, savedposition, "Out", "Sine", 0.3, true)
                 else
                     savedposition = self2.container.Position;
-					pcall(self2.container.TweenPosition, self2.container, UDim2.new(savedposition.Width.Scale, savedposition.Width.Offset, 1.5, 0), "Out", "Sine", 0.5, true)
+					pcall(self2.container.TweenPosition, self2.container, UDim2.new(savedposition.Width.Scale, savedposition.Width.Offset, 1.5, 0), "Out", "Sine", 0.3, true)
 				end
 			end
 		end)
@@ -210,9 +210,9 @@ function finity.new(isdark, gprojectName, thinProject)
 			toggled = not toggled
 
 			if toggled then
-				self2.container:TweenPosition(UDim2.new(0.5, 0, 0.5, 0), "Out", "Sine", 0.5, true)
+				self2.container:TweenPosition(UDim2.new(0.5, 0, 0.5, 0), "Out", "Sine", 0.3, true)
 			else
-				self2.container:TweenPosition(UDim2.new(0.5, 0, 1.5, 0), "Out", "Sine", 0.5, true)
+				self2.container:TweenPosition(UDim2.new(0.5, 0, 1.5, 0), "Out", "Sine", 0.3, true)
 			end
 		end
 	end)
@@ -328,7 +328,7 @@ function finity.new(isdark, gprojectName, thinProject)
 	local uipagelayout = self:Create("UIPageLayout", {
 		Padding = UDim.new(0, 10),
 		FillDirection = Enum.FillDirection.Vertical,
-		TweenTime = 0.7,
+		TweenTime = 0.1,
 		EasingStyle = Enum.EasingStyle.Quad,
 		EasingDirection = Enum.EasingDirection.InOut,
 		SortOrder = Enum.SortOrder.LayoutOrder,
