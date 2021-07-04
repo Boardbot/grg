@@ -1101,11 +1101,14 @@ end, "Autokill Selected Player")
 
 SelectPlayer:Cheat("Button", "", function()
     for i, playertarget in pairs(game.Players:GetPlayers()) do
-        if playertarget.Name ~= game.Players.LocalPlayer.Name and playertarget.Team.Name == teamToKill then
-            killPlayer(playertarget.Name, swordToUse)
-        end
+        pcall(function()
+            if playertarget.Name ~= game.Players.LocalPlayer.Name and playertarget.Team.Name == teamToKill then
+                killPlayer(playertarget.Name, swordToUse)
+            end
+        end)
     end
 end, "Autokill All Players In Team")
+
 -- Scan for player Weapons
 
 bruhMomento = nil
