@@ -39,6 +39,7 @@ back = CFrame.Angles(0, math.rad(0), 0)
 front = CFrame.Angles(0, math.rad(180), 0)
 right  = CFrame.Angles(0, math.rad(90), 0)
 left  = CFrame.Angles(0, math.rad(270), 0)
+isViewing = false
 
 function ServerHopz(Decision)
     rejoining = true
@@ -721,7 +722,7 @@ end
     
 end
 
-
+-- UI here we are!
 local Finity = loadstring(game:HttpGet("https://raw.githubusercontent.com/Boardbot/grg/main/ui.lua"))()
 
 
@@ -750,6 +751,8 @@ local DiscordSector = PlayerCategory:Sector("")
 local SelectPlayer = FunctionsCategory:Sector("Autokill")
 local ScanWeapons = FunctionsCategory:Sector("Scan for Player Weapons")
 local ServerHop = FunctionsCategory:Sector("Serverhop")
+local miscPlayer = FunctionsCategory:Sector("Miscellaneous")
+
 
 -- TeleportsCategory Sectors
 local TPSector = TeleportsCategory:Sector("Teleports")
@@ -1073,6 +1076,34 @@ ScanWeapons:Cheat("Button", "", function()
     end
 end, "Refresh Scan")
 
+miscPlayer:Cheat("Textbox", "Select Player", function(selectedPlayerTextbox)
+    
+    selectedPlayer1 = GetPlayer(selectedPlayerTextbox)    
+    end, {
+	placeholder = "Enter Player Name"
+})
+
+
+--awesex
+miscPlayer:Cheat("Button", "", function()
+    
+    isViewing = not isViewing
+    if isViewing == true then
+        game.Workspace.Camera.CameraSubject = selectedPlayer1.Character.Humanoid
+    else
+        game.Workspace.Camera.CameraSubject = game.Players.LocalPlayer.Character.Humanoid
+   end
+    
+end, "View / Unview")
+
+
+miscPlayer:Cheat("Button", "", function()
+    
+    plr1 = game.Players.LocalPlayer.Character
+    plr1.HumanoidRootPart.CFrame = CFrame.new(selectedPlayer1.Character.HumanoidRootPart.Position)
+	
+    
+end, "Teleport to Player")
 
 TPSector:Cheat("Dropdown", "Town Locations", function(Option)
 	if Option == "Beach" then
@@ -1568,32 +1599,12 @@ CreditsCredits:Cheat("Label", "Everything in this menu is\ncreated by Boardbot")
 CreditsCredits:Cheat("Label", "")
 CreditsCredits:Cheat("Label", "Contact me on Discord: Boardbot#7385")
 
+
+
+
+
+
 game.Workspace.CouncilHouse.COUNCILONLY:Destroy()
 game.Workspace.LeaderTower.LEADERONLY:Destroy()
-
-doCheck = true
-	while true do
-        wait(5)
-        for a, z in pairs(blacklistedPlayers) do
-            if z == game.Players.LocalPlayer.Name then
-                doCheck = false
-            end
-        end
-        
-        if doCheck == true then
-            for i,v in pairs(game.Players:GetPlayers()) do
-            	for l, m in pairs(blacklistedPlayers) do
-            		if v.Name == m then
-            			if game.Players.LocalPlayer.Name ~= m then
-            				youCanRunScriptHere = false
-                            setclipboard("discord.gg/BgaWVXUduZ")
-                            game.Players.LocalPlayer:Kick("\nYou cannot join this server.\nPlease find another server. Also, join the discord. discord.gg/BgaWVXUduZ (copied to clipboard).")
-            			end
-            		end
-            	end
-            end
-        end
-    end
-
 
 
