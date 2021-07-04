@@ -6,7 +6,7 @@
 
 
 --[[
-Boardbot's Generic Roleplay Gaem GUI v2.3
+Boardbot's Generic Roleplay Gaem GUI v2.32
 
 Contact me here: Boardbot#7385
 Join the discord: discord.gg/BgaWVXUduZ
