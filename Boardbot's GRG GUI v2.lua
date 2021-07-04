@@ -1067,8 +1067,8 @@ SelectPlayer:Cheat("Dropdown", "Select Team", function(Option)
         teamToKill = "Jester"
     elseif Option == "Janitor" then
         teamToKill = "Janitor"
-    elseif Option == "Civillian" then
-        teamToKill = "Civillian"
+    elseif Option == "Civilian" then
+        teamToKill = "Civilian"
     elseif Option == "Peasant" then
         teamToKill = "Peasant"
     elseif Option == "Barbarian" then
@@ -1087,7 +1087,7 @@ end, {
     	"Doctor",
     	"Jester",
     	"Janitor",
-    	"Civillian",
+    	"Civilian",
     	"Peasant",
     	"Barbarian",
     	"Criminal",
