@@ -971,6 +971,12 @@ MiscSector:Cheat("Button", "", function()
     end
 end, "Hide Identity")
 
+MiscSector:Cheat("Button", "", function()
+    pcall(function()
+        game.CoreGui.FinityUI:Destroy()
+    end)
+end, "Remove this GUI")
+
 -- Discord
 DiscordSector:Cheat("Label", "\n\nHave problems? Want updates? Join the Discord!\n\ndiscord.gg/BgaWVXUduZ")
 DiscordSector:Cheat("Button", "Discord", function()
@@ -1047,10 +1053,59 @@ end, {
 	}
 })
 
+local teamToKill = ""
+SelectPlayer:Cheat("Dropdown", "Select Team", function(Option)
+    if Option == "Leader" then
+        teamToKill = "Leader"
+    elseif Option == "Council Member" then
+        teamToKill = "Council Member"
+    elseif Option == "Landlord" then
+        teamToKill = "Landlord"
+    elseif Option == "Guard" then
+        teamToKill = "Guard"
+    elseif Option == "Jester" then
+        teamToKill = "Jester"
+    elseif Option == "Janitor" then
+        teamToKill = "Janitor"
+    elseif Option == "Civillian" then
+        teamToKill = "Civillian"
+    elseif Option == "Peasant" then
+        teamToKill = "Peasant"
+    elseif Option == "Barbarian" then
+        teamToKill = "Barbarian"
+    elseif Option == "Criminal" then
+        teamToKill = "Criminal"
+    elseif Option == "Spectating" then
+        teamToKill = "Spectating"
+    end
+end, {
+	options = {
+		"Leader",
+    	"Council Member",
+    	"Landlord",
+    	"Guard",
+    	"Doctor",
+    	"Jester",
+    	"Janitor",
+    	"Civillian",
+    	"Peasant",
+    	"Barbarian",
+    	"Criminal",
+    	"Spectating"
+	}
+})
+
 SelectPlayer:Cheat("Button", "", function()
 	killPlayer(playerToKill, swordToUse)
 end, "Autokill Selected Player")
 
+SelectPlayer:Cheat("Button", "", function()
+    for i, playertarget in pairs(game.Players:GetPlayers()) do
+        if playertarget.Name ~= game.Players.LocalPlayer.Name and playertarget.Team.Name == teamToKill then
+            killPlayer(playertarget.Name, swordToUse)
+        end
+    end
+end, "Autokill All Players In Team")
 -- Scan for player Weapons
 
 bruhMomento = nil
@@ -1606,5 +1661,4 @@ CreditsCredits:Cheat("Label", "Contact me on Discord: Boardbot#7385")
 
 game.Workspace.CouncilHouse.COUNCILONLY:Destroy()
 game.Workspace.LeaderTower.LEADERONLY:Destroy()
-
 
