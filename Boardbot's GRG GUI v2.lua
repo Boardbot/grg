@@ -1,5 +1,5 @@
 --[[
-Boardbot's Generic Roleplay Gaem GUI v2.36
+Boardbot's Generic Roleplay Gaem GUI v2.37
 
 Contact me here: Boardbot#7385
 Join the discord: discord.gg/BgaWVXUduZ
@@ -637,7 +637,7 @@ function carAutofarm(time)
     canRunFarm()
     
     
-        if notSeated == false and floodActive == false and isDead == false then
+        --if notSeated == false and floodActive == false and isDead == false then
                 wait(time)
         if game.Workspace.Karts:FindFirstChild(game.Players.LocalPlayer.Name) then
             firetouchinterest(game.Workspace.Karts[game.Players.LocalPlayer.Name].Root, game.Workspace.KartTrack.Nodes.NodeParts["1"], 0)
@@ -693,39 +693,7 @@ function carAutofarm(time)
             firetouchinterest(game.Workspace.Karts[game.Players.LocalPlayer.Name].Root, game.Workspace.KartTrack.Nodes.NodeParts["9"], 1)
         end
         
-        elseif isDead == true then 
-            finishedSetUp = false
-                repeat 
-                    
-                    wait(2) 
-                    game.ReplicatedStorage.RemoteEvent:FireServer("Respawn")
-                until game.Players.LocalPlayer.Character.Humanoid.Health > 0
-        elseif floodActive == true then
-            
-            if game.Players.LocalPlayer.Character.HumanoidRootPart.Position.y < 35 then
-                                
-                
-                game.Players.LocalPlayer.Character.Humanoid.Sit = false
-                plr1 = game.Players.LocalPlayer.Character
-                wait()
-            	plr1.HumanoidRootPart.CFrame = CFrame.new(335, 39, -133)
-            	plr1.Humanoid:UnequipTools()
-                
-            end
-        elseif notSeated == true and floodActive == false then
-            
-            finishedSetUp = false
-            repeat 
-                
-                
-        
-                wait(0.2)
-                
-                game.Players.LocalPlayer.Character.Humanoid:UnequipTools()
-                setUpCarAutofarm(true)
-                wait(0.11)
-            until game.Players.LocalPlayer.Character.Humanoid:GetState() == Enum.HumanoidStateType.Seated
-        end
+
         
         
         
@@ -743,10 +711,10 @@ function canRunFarm()
     isDead = false
     kartExists = false
     
-    if game.Workspace.TopOfWater.Position.y > -5 then
+    --[[if game.ReplicatedStorage.IsFlooding.Value == true then
         floodActive = true
 
-    end
+    end]]
     
     if game.Players.LocalPlayer.Character.Humanoid:GetState() ~= Enum.HumanoidStateType.Seated then
         notSeated = true
@@ -1665,20 +1633,23 @@ Autofarm1:Cheat(
                         
                         elseif floodActive == true then
                             
-                            if game.Players.LocalPlayer.Character.HumanoidRootPart.Position.y < 35 then
+                          --placeholder
+                            
+                        elseif notSeated == true then
+                          
+                            finishedSetUp = false
+                            --[[if game.Players.LocalPlayer.Character.HumanoidRootPart.Position.y < 33.5 then
                                 
                                 
                                 game.Players.LocalPlayer.Character.Humanoid.Sit = false
                                 plr1 = game.Players.LocalPlayer.Character
                                 wait()
                             	plr1.HumanoidRootPart.CFrame = CFrame.new(335, 39, -133)
-                            	plr1.Humanoid:UnequipTools()
+                            	
                                 
-                            end
+                            end]]
                             
-                        elseif notSeated == true and floodActive == false  then
-                          
-                            finishedSetUp = false
+                            
                             repeat 
                                
                                 
@@ -1759,4 +1730,3 @@ CreditsCredits:Cheat("Label", "Contact me on Discord: Boardbot#7385")
 
 game.Workspace.CouncilHouse.COUNCILONLY:Destroy()
 game.Workspace.LeaderTower.LEADERONLY:Destroy()
-
