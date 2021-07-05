@@ -18,7 +18,7 @@ when will he learn!
 
 
 
-
+game.CoreGui.FinityUI:Destroy()
 
 
 
@@ -42,6 +42,7 @@ front = CFrame.Angles(0, math.rad(180), 0)
 right  = CFrame.Angles(0, math.rad(90), 0)
 left  = CFrame.Angles(0, math.rad(270), 0)
 isViewing = false
+Clip = true
 
 
 
@@ -200,6 +201,25 @@ local function GetPlayer(Input)
     		return Player;
     	end
     end
+end
+
+if Noclipping then
+	Noclipping:Disconnect()
+end
+
+
+function noclip()
+	Clip = false
+	function NoclipLoop()
+		if Clip == false and game.Players.LocalPlayer.Character ~= nil then
+			for _, child in pairs(game.Players.LocalPlayer.Character:GetDescendants()) do
+				if child:IsA("BasePart") and child.CanCollide == true then
+					child.CanCollide = false
+				end
+			end
+		end
+	end
+	Noclipping = game:GetService('RunService').Stepped:connect(NoclipLoop)
 end
 
 -- Kill player function
@@ -688,12 +708,16 @@ function carAutofarm(time)
                 until game.Players.LocalPlayer.Character.Humanoid.Health > 0
         elseif floodActive == true then
             
-            finishedSetUp = false
-            game.Players.LocalPlayer.Character.Humanoid.Sit = false
-            plr1 = game.Players.LocalPlayer.Character
-        	plr1.HumanoidRootPart.CFrame = CFrame.new(335, 39, -133)
-        	plr1.Humanoid:UnequipTools()
-            repeat wait() until game.Workspace.TopOfWater.Position.y < -5
+            if game.Players.LocalPlayer.Character.HumanoidRootPart.Position.y < 35 then
+                                
+                
+                game.Players.LocalPlayer.Character.Humanoid.Sit = false
+                plr1 = game.Players.LocalPlayer.Character
+                wait()
+            	plr1.HumanoidRootPart.CFrame = CFrame.new(335, 39, -133)
+            	plr1.Humanoid:UnequipTools()
+                
+            end
         elseif notSeated == true and floodActive == false then
             
             finishedSetUp = false
@@ -772,13 +796,16 @@ local CreditsCategory = FinityWindow:Category("Credits & Info")
 -- PlayerCategory Sectors
 local SpeedSettings = PlayerCategory:Sector("Speed Settings")
 local miscPlayer = PlayerCategory:Sector("Miscellaneous")
+local ServerHop = PlayerCategory:Sector("Serverhop")
 local MiscSector = PlayerCategory:Sector("")
+
+local fillCategory = PlayerCategory:Sector("")
 local DiscordSector = PlayerCategory:Sector("")
 
 -- FunctionsCategory Sectors
 local SelectPlayer = FunctionsCategory:Sector("Autokill")
 local ScanWeapons = FunctionsCategory:Sector("Scan for Player Weapons")
-local ServerHop = FunctionsCategory:Sector("Serverhop")
+
 
 local SpoofSettings = FunctionsCategory:Sector("Spoofing")
 
@@ -788,8 +815,9 @@ local ShopSector2 = TeleportsCategory:Sector("")
 local ShopSector1 = TeleportsCategory:Sector("Shops")
 
 --AutofarmCategory Sectors
-local Autofarm1 = AutofarmCategory:Sector("Autofarm 1")
+local Autofarm1 = AutofarmCategory:Sector("Kart Autofarm")
 local Autofarm2 = AutofarmCategory:Sector("")
+local AutoArrestSector = FunctionsCategory:Sector("Auto Arrest")
 
 -- CreditsCategory Sectors
 local DiscordCredits = CreditsCategory:Sector("Discord")
@@ -919,94 +947,15 @@ end, {
 		"Spectating",
 	}
 })
-SpoofSettings:Cheat("Label", "")
-SpoofSettings:Cheat("Label", "Spoof features are clientside only.\nUse them to submit a fake exploit report\non the GRG discord.")
+
 -- Misc Settings
 
 
-MiscSector:Cheat(
-	"Checkbox", -- Type
-	"Kick on Mod Join", -- Name
-	function(antiModToggle) -- Callback function
-		if antiModToggle == true then
-    		game.Players.PlayerAdded:Connect(function(player)
-    		  if player:GetRoleInGroup(5574524) == "trial mod." or player:GetRoleInGroup(5574524) == "mod." or player:GetRoleInGroup(5574524) == "admin." or player:GetRoleInGroup(5574524) == "hunger boi." then 
-    			game.Players.LocalPlayer:Kick("(Anti-mod) A moderator joined.")
-    		  end
-    		end)
-    
-    		for i,v in pairs(game.Players:GetPlayers()) do
-    			if v:GetRoleInGroup(5574524) == "trial mod." or v:GetRoleInGroup(5574524) == "mod." or v:GetRoleInGroup(5574524) == "admin." or v:GetRoleInGroup(5574524) == "hunger boi." then 
-    				game.Players.LocalPlayer:Kick("(Anti-mod) A moderator is here.")
-    			end
-    		 end
-    	end
-	end
-)
 
-MiscSector:Cheat(
-	"Checkbox", -- Type
-	"Spam Sounds (may break game)", -- Name
-	function(State) -- Callback function
-	    shouldSpamSounds = State
-    	while shouldSpamSounds == true do
-    		for i,v in pairs(game.Workspace:GetDescendants()) do
-    			if v:IsA("Sound") then
-    				v:Play()
-    			end
-    		end
-    		
-    		wait(0.75)
-    		State = false
-    	end
-	    shouldSpamSounds = State		
-	end
-)
 
-MiscSector:Cheat("Label", "")
-
-MiscSector:Cheat("Button", "", function()
-	game.Workspace.Gate.Door:Destroy()
-	game.Workspace.Gate.Exit:Destroy()
-end, "Remove Gate")
-
-MiscSector:Cheat("Button", "", function()
-	game.Players.LocalPlayer.Character.Humanoid.Health = 0
-	wait(0.01)
-	
-	game.ReplicatedStorage.RemoteEvent:FireServer("Respawn")
-	wait(0.49)    
-	game.Workspace.Camera.CameraSubject = game.Players.LocalPlayer.Character.Humanoid
-	
-	noclip = false
-	game.Players.LocalPlayer.Character.Humanoid:ChangeState(11)
-end, "Instant Respawn")
-
-MiscSector:Cheat("Button", "", function()
-	game.Players.LocalPlayer.Character.Head.face:Destroy()
-	
-	local Player = game.Players.LocalPlayer
-
-	for i,v in pairs(Player.Character:GetDescendants())do
-			if v:IsA("BillboardGui") or v:IsA("SurfaceGui") then
-				v:Destroy()
-			end
-	end
-	
-	for i,v in pairs(game.Players.LocalPlayer.Character:GetChildren()) do
-	if v:IsA("Hat") or v:IsA("Accessory") then
-		v.Handle:Destroy()
-	end
-    end
-end, "Hide Identity")
 
 -- Discord
-DiscordSector:Cheat("Label", "\n\nHave problems? Want updates? Join the Discord!\n\ndiscord.gg/BgaWVXUduZ")
-DiscordSector:Cheat("Button", "Discord", function()
-    setclipboard("discord.gg/BgaWVXUduZ")
-end, "Copy Discord Invite")
 
-DiscordSector:Cheat("Label", "")
 
 -- FunctionsCategory Category
 
@@ -1023,7 +972,7 @@ SelectPlayer:Cheat("Slider", "Kill Height", function(h)
 	killHeight = h
 end, {min = -12, max = 0, suffix = " studs"})
 
-SelectPlayer:Cheat("Dropdown", "Select Sword", function(Option)
+SelectPlayer:Cheat("Dropdown", "Sword to Use", function(Option)
     
     
 	if Option == "Autoselect Sword" then
@@ -1078,7 +1027,7 @@ end, {
 
 SelectPlayer:Cheat("Button", "", function()
 	killPlayer(playerToKill, swordToUse)
-end, "Autokill Selected Player")
+end, "Kill Selected Player")
 
 -- Scan for player Weapons
 
@@ -1134,43 +1083,180 @@ miscPlayer:Cheat("Button", "", function()
     
 end, "Teleport to Player")
 
---this isnt close to being finished lol
---[[miscPlayer:Cheat(
-	"Checkbox", -- Type
-	"Auto Arrest", -- Name
-	function(autoArrestEnabled) -- Callback function
-	    
-	    if autoArrestEnabled then
-	        workPlr = workspace[game.Players.LocalPlayer.Name]
-	        
-	        for poop, sock in pairs(game.Players:GetChildren()) do
- 
-                if sock.stats:FindFirstChild("Arrestable") then
-                  
-                    if sock.stats.Arrestable.Value == true then
-                         
-                        if game.Players.LocalPlayer.Team ~= game:GetService("Teams").Guard then
-                           Notify("Auto Arrest", "You must be guard for this!", 5)
-                        elseif game.Players.LocalPlayer.Team == game:GetService("Teams").Guard then
-                            
-                            
-                            if handcuffs.Players.LocalPlayer.Backpack:FindFirstChild("Handcuffs") then
-                        		handcuffs = game.Players.LocalPlayer.Backpack["Handcuffs"]
-                        	elseif workPlr:FindFirstChild("Handcuffs") then 
-                        		handcuffs = workPlr["Handcuffs"]
-                        	end
-                       
-                       
-                       end
-                    end
-                end
-	        end
-        
-         end
+miscPlayer:Cheat("Label", "")
 
+miscPlayer:Cheat("Button", "", function()
+	game.Workspace.Gate.Door:Destroy()
+	game.Workspace.Gate.Exit:Destroy()
+end, "Remove Gate")
+
+miscPlayer:Cheat("Button", "", function()
+	game.Players.LocalPlayer.Character.Humanoid.Health = 0
+	wait(0.01)
+	
+	game.ReplicatedStorage.RemoteEvent:FireServer("Respawn")
+	wait(0.49)    
+	game.Workspace.Camera.CameraSubject = game.Players.LocalPlayer.Character.Humanoid
+	
+	noclip = false
+	game.Players.LocalPlayer.Character.Humanoid:ChangeState(11)
+end, "Instant Respawn")
+
+miscPlayer:Cheat("Button", "", function()
+	game.Players.LocalPlayer.Character.Head.face:Destroy()
+	
+	local Player = game.Players.LocalPlayer
+
+	for i,v in pairs(Player.Character:GetDescendants())do
+			if v:IsA("BillboardGui") or v:IsA("SurfaceGui") then
+				v:Destroy()
+			end
+	end
+	
+	for i,v in pairs(game.Players.LocalPlayer.Character:GetChildren()) do
+	if v:IsA("Hat") or v:IsA("Accessory") then
+		v.Handle:Destroy()
+	end
+    end
+end, "Hide Identity")
+
+miscPlayer:Cheat(
+	"Checkbox", -- Type
+	"Kick on Mod Join", -- Name
+	function(antiModToggle) -- Callback function
+		if antiModToggle == true then
+    		game.Players.PlayerAdded:Connect(function(player)
+    		  if player:GetRoleInGroup(5574524) == "trial mod." or player:GetRoleInGroup(5574524) == "mod." or player:GetRoleInGroup(5574524) == "admin." or player:GetRoleInGroup(5574524) == "hunger boi." then 
+    			game.Players.LocalPlayer:Kick("(Anti-mod) A moderator joined.")
+    		  end
+    		end)
+    
+    		for i,v in pairs(game.Players:GetPlayers()) do
+    			if v:GetRoleInGroup(5574524) == "trial mod." or v:GetRoleInGroup(5574524) == "mod." or v:GetRoleInGroup(5574524) == "admin." or v:GetRoleInGroup(5574524) == "hunger boi." then 
+    				game.Players.LocalPlayer:Kick("(Anti-mod) A moderator is here.")
+    			end
+    		 end
+    	end
+	end
+)
+
+miscPlayer:Cheat(
+	"Checkbox", -- Type
+	"Spam Sounds (may break game)", -- Name
+	function(State) -- Callback function
+	    shouldSpamSounds = State
+    	while shouldSpamSounds == true do
+    		for i,v in pairs(game.Workspace:GetDescendants()) do
+    			if v:IsA("Sound") then
+    				v:Play()
+    			end
+    		end
+    		
+    		wait(0.75)
+    		State = false
+    	end
+	    shouldSpamSounds = State		
+	end
+)
+
+
+
+--this isnt close to being finished lol
+AutoArrestSector:Cheat(
+	"Checkbox", -- Type
+	"Enable", -- Name
+	function(autoArrestEnabled) -- Callback function
+	    bla1 = autoArrestEnabled
+	    workPlr = workspace[game.Players.LocalPlayer.Name]
+        plr1 = game.Players.LocalPlayer.Character
+        poopyPlayerFrame = CFrame.new(0,-2.5,1.5)
+        currentPos = game.Players.LocalPlayer.Character.HumanoidRootPart.Position
+        print(1)
+    if bla1 == true and game.Players.LocalPlayer.Team == game:GetService("Teams").Guard then
+        print(2)
+        repeat
+        arrestablePlayersExist = false
+        print(99)
+    	for poop, sock in pairs(game.Players:GetChildren()) do
+        
+            
+            
+            if sock.stats:FindFirstChild("Arrestable") and bla1 ~= false then
+              
+                if sock.stats.Arrestable.Value == true then
+                    
+                     arrestablePlayersExist = true
+                     hasJustRan = true
+                     
+                   
+                        Clip = false
+                        noclip()
+                        
+                        
+                        
+                        sockInWorkspace = game.Workspace[sock.Name]
+                        
+                        if game.Players.LocalPlayer.Backpack:FindFirstChild("Handcuffs") then
+                    		handcuffs = game.Players.LocalPlayer.Backpack["Handcuffs"]
+                    	elseif workPlr:FindFirstChild("Handcuffs") then 
+                    		handcuffs = workPlr["Handcuffs"]
+                    	end
+                    	repeat
+                    	game.Workspace.Camera.CameraSubject = sock.Character.Humanoid
+                        game.Players.LocalPlayer.Character.Humanoid:EquipTool(handcuffs)
+                    	
+            			targetPlayerLocation = CFrame.new(sockInWorkspace.Torso.Position.x, sockInWorkspace.Torso.Position.y, sockInWorkspace.Torso.Position.z)
+            			newtargetPlayerLocation = CFrame.new(targetPlayerLocation.x + poopyPlayerFrame.x, targetPlayerLocation.y + poopyPlayerFrame.y, targetPlayerLocation.z + poopyPlayerFrame.z)
+                       
+            		
+        
+            			game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = newtargetPlayerLocation * CFrame.Angles(math.rad(90),0,0)
+            			
+                        handcuffs:Activate()
+                        wait()
+                        
+                        until sock.stats.Arrestable.Value == false or game.Players.LocalPlayer.Character.Humanoid.Health == 0 or bla1 == false
+                   
+                end
+            end
+        end
+    
+        if arrestablePlayersExist == false then
+            print(5)
+            
+            game.Workspace.Camera.CameraSubject = game.Players.LocalPlayer.Character.Humanoid
+            if hasJustRan == true then
+                hasJustRan = false
+                Clip = true
+                if Noclipping then
+                	Noclipping:Disconnect()
+                end
+                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(currentPos.x, currentPos.y + 8, currentPos.z)
+                print(6)
+                wait(1)
+            end
+        end
+        
+        wait()
+        print(7)
+        until bla1 == false or game.Players.LocalPlayer.Character.Humanoid.Health == 0
+        game.Workspace.Camera.CameraSubject = game.Players.LocalPlayer.Character.Humanoid
+        elseif bla1 == true and game.Players.LocalPlayer.Team ~= game:GetService("Teams").Guard then
+            Notify("Auto Arrest", "You must be guard for this!", 5)
+            game.Workspace.Camera.CameraSubject = game.Players.LocalPlayer.Character.Humanoid
+            print(8)
+        elseif
+            bla1 == false then
+                game.Workspace.Camera.CameraSubject = game.Players.LocalPlayer.Character.Humanoid
+                end
+        
+        print(9)
 	    
 	    
-end)]]
+end)
+
+AutoArrestSector:Cheat("Label", "")
+AutoArrestSector:Cheat("Label", "\nSpoof features are clientside only.\nUse them to submit a fake exploit report\non the GRG discord.")
 
 TPSector:Cheat("Dropdown", "Town Locations", function(Option)
 	if Option == "Beach" then
@@ -1538,6 +1624,16 @@ ServerHop:Cheat("Button", "", function()
 	rejoining = false
     
 end, "Rejoin Server")
+
+ServerHop:Cheat("Label", "")
+MiscSector:Cheat("Label", "")
+ServerHop:Cheat("Label", "\n\nHave problems? Want updates? Join the Discord!\n\ndiscord.gg/BgaWVXUduZ")
+ServerHop:Cheat("Button", "Discord", function()
+    setclipboard("discord.gg/BgaWVXUduZ")
+end, "Copy Discord Invite")
+
+DiscordSector:Cheat("Label", "")
+
 --AutofarmCategory stuff
 
 Autofarm1:Cheat(
@@ -1575,12 +1671,16 @@ Autofarm1:Cheat(
                         
                         elseif floodActive == true then
                             
-                            finishedSetUp = false
-                            game.Players.LocalPlayer.Character.Humanoid.Sit = false
-                            plr1 = game.Players.LocalPlayer.Character
-                        	plr1.HumanoidRootPart.CFrame = CFrame.new(335, 39, -133)
-                        	plr1.Humanoid:UnequipTools()
-                            repeat wait() until game.Workspace.TopOfWater.Position.y < -5
+                            if game.Players.LocalPlayer.Character.HumanoidRootPart.Position.y < 35 then
+                                
+                                
+                                game.Players.LocalPlayer.Character.Humanoid.Sit = false
+                                plr1 = game.Players.LocalPlayer.Character
+                                wait()
+                            	plr1.HumanoidRootPart.CFrame = CFrame.new(335, 39, -133)
+                            	plr1.Humanoid:UnequipTools()
+                                
+                            end
                             
                         elseif notSeated == true and floodActive == false  then
                           
@@ -1606,7 +1706,7 @@ Autofarm1:Cheat(
                         
                         if finishedSetUp == false then
                             setUpCarAutofarm(bla)
-                            wait(1)
+                            wait(0.5)
                         end
                     until autofarmEnabled == false or bla == false
                     
@@ -1634,8 +1734,9 @@ Autofarm1:Cheat("Slider", "Autofarm Speed", function(laTime)
 	farmTime = 1 / laTime
 end, {min = 6, max = 11, suffix = " nodes / sec"})
 
+Autofarm1:Cheat("Label", "Recommended Autofarm Speed: 9 - 9.8")
 Autofarm2:Cheat("Label", "")
-Autofarm2:Cheat("Label", "Recommended Autofarm Speed: 9-9.8\nThe autofarm is ping-dependent, so speeds above 9\nmay not register for some users.\n\nPlay around with the speed\nto see what works best.")
+Autofarm2:Cheat("Label", "The autofarm is ping-dependent, so speeds above 9\nmay not register for some users.\n\nPlay around with the speed\nto see what works best.")
 
 Autofarm2:Cheat("Label", "")
 Autofarm2:Cheat("Label", "\n\n\nHighly recommended to use on VIP servers.\nVIP servers are FREE.")
@@ -1664,5 +1765,4 @@ CreditsCredits:Cheat("Label", "Contact me on Discord: Boardbot#7385")
 
 game.Workspace.CouncilHouse.COUNCILONLY:Destroy()
 game.Workspace.LeaderTower.LEADERONLY:Destroy()
-
 
