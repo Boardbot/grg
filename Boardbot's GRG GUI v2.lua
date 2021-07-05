@@ -6,7 +6,7 @@
 
 
 --[[
-Boardbot's Generic Roleplay Gaem GUI v2.32
+Boardbot's Generic Roleplay Gaem GUI v2.3
 
 Contact me here: Boardbot#7385
 Join the discord: discord.gg/BgaWVXUduZ
@@ -40,6 +40,8 @@ front = CFrame.Angles(0, math.rad(180), 0)
 right  = CFrame.Angles(0, math.rad(90), 0)
 left  = CFrame.Angles(0, math.rad(270), 0)
 isViewing = false
+
+
 
 function ServerHopz(Decision)
     rejoining = true
@@ -515,6 +517,12 @@ function setUpCarAutofarm(bla)
                fireproximityprompt(game:GetService("Workspace").SpawnArea.PeasantSpawnArea.PeasantTP.ProximityPrompt, 1)
             end
             
+            for i,v in pairs(game.Workspace.Ragdolls:GetChildren()) do
+                if v:IsA("Model") then 
+                    v:Destroy()
+                end
+            end
+            
             game.Players.LocalPlayer.Character.Humanoid.Sit = false
            
             
@@ -531,37 +539,38 @@ function setUpCarAutofarm(bla)
             	Notify("Autofarm", "Setting up. Please wait...", 6.5)
             end
             
-            wait(1)
+           
             plr1 = game.Players.LocalPlayer.Character
         	plr1.HumanoidRootPart.CFrame = CFrame.new(335, 36, -133)
+        	
+        	
         	plr1.Humanoid:UnequipTools()
         	wait(1)
         	kartTool = game.Players.LocalPlayer.Backpack["Kart"]
         	game.Players.LocalPlayer.Character.Humanoid:EquipTool(kartTool)
-        	  
-        	kartTool:Activate()
         	
-        	wait(3)
-        	daSeat = game.Workspace.Karts[game.Players.LocalPlayer.Name].VehicleSeat
-            plr1.HumanoidRootPart.CFrame = CFrame.new(daSeat.Position.x, daSeat.Position.y + 17, daSeat.Position.z)
-            wait(1)
-            
-            if plr1.Humanoid:GetState() ~= Enum.HumanoidStateType.Seated then
+        	
+        	repeat
+            	kartTool:Activate()
+            	
+            	wait(2)
+            	daSeat = game.Workspace.Karts[game.Players.LocalPlayer.Name].VehicleSeat
+                plr1.HumanoidRootPart.CFrame = CFrame.new(daSeat.Position.x, daSeat.Position.y + 17, daSeat.Position.z)
+                wait(1)
                 
-                for count = 1, 4 do
-                    daSeat = game.Workspace.Karts[game.Players.LocalPlayer.Name].VehicleSeat
-                    plr1.HumanoidRootPart.CFrame = CFrame.new(daSeat.Position.x, daSeat.Position.y + 17, daSeat.Position.z)
+                if plr1.Humanoid:GetState() ~= Enum.HumanoidStateType.Seated then
+                    plr1.HumanoidRootPart.CFrame = CFrame.new(335, 36, -133)
                     wait(0.5)
                 end
-            end
+            
+            until plr1.Humanoid:GetState() == Enum.HumanoidStateType.Seated 
+                
+              
             
             seat = game.Players.LocalPlayer.Character.Humanoid.SeatPart
             vehicleModel = seat.Parent
             
-            vehicleModel.FR:Destroy()
-            vehicleModel.BR:Destroy()
-            vehicleModel.FL:Destroy()
-            vehicleModel.BL:Destroy()
+        
             
             
             repeat
@@ -571,13 +580,9 @@ function setUpCarAutofarm(bla)
             until vehicleModel.ClassName == "Model"
             wait(0.1)
             
-            wholeTrack = game.Workspace.KartTrack.Nodes
+           
         
-            for i, v in pairs(wholeTrack:GetDescendants()) do
-                if v:IsA("Part") then 
-                    v.Transparency = 0.5
-                end
-            end
+           
             
             wait(1)
             if plr1.Humanoid:GetState() == Enum.HumanoidStateType.Seated then
@@ -615,76 +620,97 @@ function carAutofarm(time)
     
     canRunFarm()
     
-    if notSeated == false and floodActive == false and isDead == false then
-        wait(time)
+    
+        if notSeated == false and floodActive == false and isDead == false then
+                wait(time)
         if game.Workspace.Karts:FindFirstChild(game.Players.LocalPlayer.Name) then
-            vehicleModel:SetPrimaryPartCFrame(CFrame.new(314, 35.5, -108) * front)
+            firetouchinterest(game.Workspace.Karts[game.Players.LocalPlayer.Name].Root, game.Workspace.KartTrack.Nodes.NodeParts["1"], 0)
+
+            firetouchinterest(game.Workspace.Karts[game.Players.LocalPlayer.Name].Root, game.Workspace.KartTrack.Nodes.NodeParts["1"], 1)
         end
         wait(time)
         if game.Workspace.Karts:FindFirstChild(game.Players.LocalPlayer.Name) then
-        vehicleModel:SetPrimaryPartCFrame(CFrame.new(364, 43, -58) * left)
+            firetouchinterest(game.Workspace.Karts[game.Players.LocalPlayer.Name].Root, game.Workspace.KartTrack.Nodes.NodeParts["2"], 0)
+    
+            firetouchinterest(game.Workspace.Karts[game.Players.LocalPlayer.Name].Root, game.Workspace.KartTrack.Nodes.NodeParts["2"], 1)
         end
         wait(time)
         if game.Workspace.Karts:FindFirstChild(game.Players.LocalPlayer.Name) then
-        vehicleModel:SetPrimaryPartCFrame(CFrame.new(412.5, 30.5, -58) * left)
+            firetouchinterest(game.Workspace.Karts[game.Players.LocalPlayer.Name].Root, game.Workspace.KartTrack.Nodes.NodeParts["3"], 0)
+    
+            firetouchinterest(game.Workspace.Karts[game.Players.LocalPlayer.Name].Root, game.Workspace.KartTrack.Nodes.NodeParts["3"], 1)
         end
         wait(time)
         if game.Workspace.Karts:FindFirstChild(game.Players.LocalPlayer.Name) then
-        vehicleModel:SetPrimaryPartCFrame(CFrame.new(475.5, 30.5, -64.5)* back)
+            firetouchinterest(game.Workspace.Karts[game.Players.LocalPlayer.Name].Root, game.Workspace.KartTrack.Nodes.NodeParts["4"], 0)
+    
+            firetouchinterest(game.Workspace.Karts[game.Players.LocalPlayer.Name].Root, game.Workspace.KartTrack.Nodes.NodeParts["4"], 1)
         end
         wait(time)
         if game.Workspace.Karts:FindFirstChild(game.Players.LocalPlayer.Name) then
-        vehicleModel:SetPrimaryPartCFrame(CFrame.new(459.5, 30.5, -94)*right)
+            firetouchinterest(game.Workspace.Karts[game.Players.LocalPlayer.Name].Root, game.Workspace.KartTrack.Nodes.NodeParts["5"], 0)
+    
+            firetouchinterest(game.Workspace.Karts[game.Players.LocalPlayer.Name].Root, game.Workspace.KartTrack.Nodes.NodeParts["5"], 1)
         end
         wait(time)
         if game.Workspace.Karts:FindFirstChild(game.Players.LocalPlayer.Name) then
-        vehicleModel:SetPrimaryPartCFrame(CFrame.new(439, 34.5, -136.5)*back)
+            firetouchinterest(game.Workspace.Karts[game.Players.LocalPlayer.Name].Root, game.Workspace.KartTrack.Nodes.NodeParts["6"], 0)
+    
+            firetouchinterest(game.Workspace.Karts[game.Players.LocalPlayer.Name].Root, game.Workspace.KartTrack.Nodes.NodeParts["6"], 1)
         end
         wait(time)
         if game.Workspace.Karts:FindFirstChild(game.Players.LocalPlayer.Name) then
-        vehicleModel:SetPrimaryPartCFrame(CFrame.new(411, 33, -161.5)*right)
+            firetouchinterest(game.Workspace.Karts[game.Players.LocalPlayer.Name].Root, game.Workspace.KartTrack.Nodes.NodeParts["7"], 0)
+    
+            firetouchinterest(game.Workspace.Karts[game.Players.LocalPlayer.Name].Root, game.Workspace.KartTrack.Nodes.NodeParts["7"], 1)
         end
         wait(time)
         if game.Workspace.Karts:FindFirstChild(game.Players.LocalPlayer.Name) then
-        vehicleModel:SetPrimaryPartCFrame(CFrame.new(355.5, 34.5, -182)*right)
+            firetouchinterest(game.Workspace.Karts[game.Players.LocalPlayer.Name].Root, game.Workspace.KartTrack.Nodes.NodeParts["8"], 0)
+    
+            firetouchinterest(game.Workspace.Karts[game.Players.LocalPlayer.Name].Root, game.Workspace.KartTrack.Nodes.NodeParts["8"], 1)
         end
         wait(time)
         if game.Workspace.Karts:FindFirstChild(game.Players.LocalPlayer.Name) then
-        vehicleModel:SetPrimaryPartCFrame(CFrame.new(313.5, 34.5, -166)*front)
+            firetouchinterest(game.Workspace.Karts[game.Players.LocalPlayer.Name].Root, game.Workspace.KartTrack.Nodes.NodeParts["9"], 0)
+    
+            firetouchinterest(game.Workspace.Karts[game.Players.LocalPlayer.Name].Root, game.Workspace.KartTrack.Nodes.NodeParts["9"], 1)
         end
-    elseif isDead == true then 
-        finishedSetUp = false
+        
+        elseif isDead == true then 
+            finishedSetUp = false
+                repeat 
+                    
+                    wait(2) 
+                    game.ReplicatedStorage.RemoteEvent:FireServer("Respawn")
+                until game.Players.LocalPlayer.Character.Humanoid.Health > 0
+        elseif floodActive == true then
+            
+            finishedSetUp = false
+            game.Players.LocalPlayer.Character.Humanoid.Sit = false
+            plr1 = game.Players.LocalPlayer.Character
+        	plr1.HumanoidRootPart.CFrame = CFrame.new(335, 39, -133)
+        	plr1.Humanoid:UnequipTools()
+            repeat wait() until game.Workspace.TopOfWater.Position.y < -5
+        elseif notSeated == true and floodActive == false then
+            
+            finishedSetUp = false
             repeat 
                 
-                wait(2) 
-                game.ReplicatedStorage.RemoteEvent:FireServer("Respawn")
-            until game.Players.LocalPlayer.Character.Humanoid.Health > 0
-    elseif floodActive == true then
+                
         
-        finishedSetUp = false
-        game.Players.LocalPlayer.Character.Humanoid.Sit = false
-        plr1 = game.Players.LocalPlayer.Character
-    	plr1.HumanoidRootPart.CFrame = CFrame.new(335, 39, -133)
-    	plr1.Humanoid:UnequipTools()
-        repeat wait() until game.Workspace.TopOfWater.Position.y < -5
-    elseif notSeated == true and floodActive == false then
+                wait(0.2)
+                
+                game.Players.LocalPlayer.Character.Humanoid:UnequipTools()
+                setUpCarAutofarm(true)
+                wait(0.11)
+            until game.Players.LocalPlayer.Character.Humanoid:GetState() == Enum.HumanoidStateType.Seated
+        end
         
-        finishedSetUp = false
-        repeat 
-            
-            
-    
-            wait(1)
-            game.Players.LocalPlayer.Character.Humanoid.Sit = false
-            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(334, 39, -130)
-            game.Players.LocalPlayer.Character.Humanoid:UnequipTools()
-            setUpCarAutofarm(true)
-            wait(1)
-        until game.Players.LocalPlayer.Character.Humanoid:GetState() == Enum.HumanoidStateType.Seated
-
+        
+        
     
     
-    end
     return finishedSetUp
 end
 
@@ -743,16 +769,16 @@ local CreditsCategory = FinityWindow:Category("Credits & Info")
 
 -- PlayerCategory Sectors
 local SpeedSettings = PlayerCategory:Sector("Speed Settings")
-local SpoofSettings = PlayerCategory:Sector("Spoofing")
-local MiscSector = PlayerCategory:Sector("Miscellaneous")
+local miscPlayer = PlayerCategory:Sector("Miscellaneous")
+local MiscSector = PlayerCategory:Sector("")
 local DiscordSector = PlayerCategory:Sector("")
 
 -- FunctionsCategory Sectors
 local SelectPlayer = FunctionsCategory:Sector("Autokill")
 local ScanWeapons = FunctionsCategory:Sector("Scan for Player Weapons")
 local ServerHop = FunctionsCategory:Sector("Serverhop")
-local miscPlayer = FunctionsCategory:Sector("Miscellaneous")
 
+local SpoofSettings = FunctionsCategory:Sector("Spoofing")
 
 -- TeleportsCategory Sectors
 local TPSector = TeleportsCategory:Sector("Teleports")
@@ -891,7 +917,8 @@ end, {
 		"Spectating",
 	}
 })
-
+SpoofSettings:Cheat("Label", "")
+SpoofSettings:Cheat("Label", "Spoof features are clientside only.\nUse them to submit a fake exploit report\non the GRG discord.")
 -- Misc Settings
 
 
@@ -978,7 +1005,7 @@ DiscordSector:Cheat("Button", "Discord", function()
 end, "Copy Discord Invite")
 
 DiscordSector:Cheat("Label", "")
-DiscordSector:Cheat("Label", "Hide menu: Right CTRL")
+
 -- FunctionsCategory Category
 
 -- Select Player Textbox
@@ -1084,7 +1111,7 @@ miscPlayer:Cheat("Textbox", "Select Player", function(selectedPlayerTextbox)
 })
 
 
---awesex
+--imhere
 miscPlayer:Cheat("Button", "", function()
     
     isViewing = not isViewing
@@ -1104,6 +1131,44 @@ miscPlayer:Cheat("Button", "", function()
 	
     
 end, "Teleport to Player")
+
+--this isnt close to being finished lol
+--[[miscPlayer:Cheat(
+	"Checkbox", -- Type
+	"Auto Arrest", -- Name
+	function(autoArrestEnabled) -- Callback function
+	    
+	    if autoArrestEnabled then
+	        workPlr = workspace[game.Players.LocalPlayer.Name]
+	        
+	        for poop, sock in pairs(game.Players:GetChildren()) do
+ 
+                if sock.stats:FindFirstChild("Arrestable") then
+                  
+                    if sock.stats.Arrestable.Value == true then
+                         
+                        if game.Players.LocalPlayer.Team ~= game:GetService("Teams").Guard then
+                           Notify("Auto Arrest", "You must be guard for this!", 5)
+                        elseif game.Players.LocalPlayer.Team == game:GetService("Teams").Guard then
+                            
+                            
+                            if handcuffs.Players.LocalPlayer.Backpack:FindFirstChild("Handcuffs") then
+                        		handcuffs = game.Players.LocalPlayer.Backpack["Handcuffs"]
+                        	elseif workPlr:FindFirstChild("Handcuffs") then 
+                        		handcuffs = workPlr["Handcuffs"]
+                        	end
+                       
+                       
+                       end
+                    end
+                end
+	        end
+        
+         end
+
+	    
+	    
+end)]]
 
 TPSector:Cheat("Dropdown", "Town Locations", function(Option)
 	if Option == "Beach" then
@@ -1515,18 +1580,17 @@ Autofarm1:Cheat(
                         	plr1.Humanoid:UnequipTools()
                             repeat wait() until game.Workspace.TopOfWater.Position.y < -5
                             
-                        elseif notSeated == true and floodActive == false then
+                        elseif notSeated == true and floodActive == false  then
                           
                             finishedSetUp = false
                             repeat 
                                
                                 
-                                wait(1)
+                                wait(0.4)
                                 game.Players.LocalPlayer.Character.Humanoid.Sit = false
-                                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(334, 39, -130)
                                 game.Players.LocalPlayer.Character.Humanoid:UnequipTools()
                                 setUpCarAutofarm(true)
-                                wait(1)
+                                wait(0.4)
                             until game.Players.LocalPlayer.Character.Humanoid:GetState() == Enum.HumanoidStateType.Seated
                         
                         elseif kartExists == false then
@@ -1555,15 +1619,7 @@ Autofarm1:Cheat(
 	    elseif autofarmEnabled == false and finishedSetUp == true then 
            
             finishedSetUp = false
-            game.Players.LocalPlayer.Character.Humanoid.Health = 0
-        	wait(0.01)
-        	
-        	game.ReplicatedStorage.RemoteEvent:FireServer("Respawn")
-        	wait(0.49)    
-        	game.Workspace.Camera.CameraSubject = game.Players.LocalPlayer.Character.Humanoid
-        	
-        	noclip = false
-        	game.Players.LocalPlayer.Character.Humanoid:ChangeState(11)
+            
         end
     
 end
@@ -1574,10 +1630,10 @@ end
 
 Autofarm1:Cheat("Slider", "Autofarm Speed", function(laTime)
 	farmTime = 1 / laTime
-end, {min = 1, max = 11, suffix = ""})
+end, {min = 6, max = 11, suffix = " nodes / sec"})
 
 Autofarm2:Cheat("Label", "")
-Autofarm2:Cheat("Label", "Recommended Autofarm Speed: 8.5-9\nThe autofarm is ping-dependent, so speeds above 9\nmay not register for some users.\n\nPlay around with the speed\nto see what works best.")
+Autofarm2:Cheat("Label", "Recommended Autofarm Speed: 9-9.8\nThe autofarm is ping-dependent, so speeds above 9\nmay not register for some users.\n\nPlay around with the speed\nto see what works best.")
 
 Autofarm2:Cheat("Label", "")
 Autofarm2:Cheat("Label", "\n\n\nHighly recommended to use on VIP servers.\nVIP servers are FREE.")
