@@ -1,5 +1,5 @@
 --[[
-Boardbot's Generic Roleplay Gaem GUI v2.37
+Boardbot's Generic Roleplay Gaem GUI v2.4
 
 Contact me here: Boardbot#7385
 Join the discord: discord.gg/BgaWVXUduZ
@@ -13,7 +13,6 @@ when will he learn!
 -- https://v3rmillion.net/member.php?action=profile&uid=1389477
 -- enjoy
 -- my code is shit, just a forewarning
-
 
 
 local vu = game:GetService("VirtualUser")
@@ -37,9 +36,129 @@ right  = CFrame.Angles(0, math.rad(90), 0)
 left  = CFrame.Angles(0, math.rad(270), 0)
 isViewing = false
 Clip = true
+playerIsInVehicle = false
 
 
-
+function AutoVote(vehicleOrHumanoid)
+    councilAdjourned = true
+    if game.Workspace.CouncilHouse.Board.SurfaceGui.LawStatus.Text ~= "COUNCIL ADJOURNED" then
+                        wasRun = true
+                        councilAdjourned = false
+                        Clip = false
+                        noclip()
+	                   if vehicleOrHumanoid == "Vehicle" then
+	                       seat = game.Players.LocalPlayer.Character.Humanoid.SeatPart
+                            vehicleModel = seat.Parent
+                            vehicleModel:SetPrimaryPartCFrame(CFrame.new(324, 51, 430))
+                        elseif vehicleOrHumanoid == "Humanoid" then
+                            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(324, 51, 430)
+	                   end
+	                   
+	                   
+	                        
+	                        if game:GetService("Workspace").CouncilHouse.Board.SurfaceGui.Prompt.Text == "Should guards be allowed to vote?" then
+	                            if guardsCanVote1 == true then
+	                                fireproximityprompt(game:GetService("Workspace").CouncilHouse.Yes.ProximityPrompt, 1)
+	                            else
+	                                fireproximityprompt(game:GetService("Workspace").CouncilHouse.No.ProximityPrompt, 1)
+	                            end
+	                            
+	                            
+	                        elseif game:GetService("Workspace").CouncilHouse.Board.SurfaceGui.Prompt.Text == "Should civilians be able to riot?" then
+	                            if riotingAllowed1 == true then
+	                                fireproximityprompt(game:GetService("Workspace").CouncilHouse.Yes.ProximityPrompt, 1)
+	                            else
+	                                fireproximityprompt(game:GetService("Workspace").CouncilHouse.No.ProximityPrompt, 1)
+	                            end
+	                            
+	                        elseif game:GetService("Workspace").CouncilHouse.Board.SurfaceGui.Prompt.Text == "Should only guards purchase weapons?" then
+	                            if guardsCanPurchaseWeapons1 == true then
+	                                fireproximityprompt(game:GetService("Workspace").CouncilHouse.Yes.ProximityPrompt, 1)
+	                            else
+	                                fireproximityprompt(game:GetService("Workspace").CouncilHouse.No.ProximityPrompt, 1)
+	                            end
+	                            
+	                        elseif game:GetService("Workspace").CouncilHouse.Board.SurfaceGui.Prompt.Text == "Should violence be allowed in the town?" then
+                                if violenceAllowed1 == true then
+                                    fireproximityprompt(game:GetService("Workspace").CouncilHouse.Yes.ProximityPrompt, 1)
+	                            else
+	                                fireproximityprompt(game:GetService("Workspace").CouncilHouse.No.ProximityPrompt, 1)
+	                            end
+                           
+                           
+	                        elseif game:GetService("Workspace").CouncilHouse.Board.SurfaceGui.Prompt.Text == "Can council members be arrested?" then
+                                 if councilCanBeArrested1 == true then
+                                    fireproximityprompt(game:GetService("Workspace").CouncilHouse.Yes.ProximityPrompt, 1)
+	                            else
+	                                fireproximityprompt(game:GetService("Workspace").CouncilHouse.No.ProximityPrompt, 1)
+	                            end
+                           
+                           
+	                        elseif game:GetService("Workspace").CouncilHouse.Board.SurfaceGui.Prompt.Text == "Should council members pay taxes?" then
+                                if councilPaysTax1 == true then
+                                    fireproximityprompt(game:GetService("Workspace").CouncilHouse.Yes.ProximityPrompt, 1)
+	                            else
+	                                fireproximityprompt(game:GetService("Workspace").CouncilHouse.No.ProximityPrompt, 1)
+	                            end
+                           
+                           
+	                        elseif game:GetService("Workspace").CouncilHouse.Board.SurfaceGui.Prompt.Text == "Should doctors pay taxes?" then
+                               if doctorsPayTax1 == true then
+                                    fireproximityprompt(game:GetService("Workspace").CouncilHouse.Yes.ProximityPrompt, 1)
+	                            else
+	                                fireproximityprompt(game:GetService("Workspace").CouncilHouse.No.ProximityPrompt, 1)
+	                            end
+                           
+                           
+	                        elseif game:GetService("Workspace").CouncilHouse.Board.SurfaceGui.Prompt.Text == "Should healthcare be free?" then
+                                 if healthcareFree1 == true then
+                                    fireproximityprompt(game:GetService("Workspace").CouncilHouse.Yes.ProximityPrompt, 1)
+	                            else
+	                                fireproximityprompt(game:GetService("Workspace").CouncilHouse.No.ProximityPrompt, 1)
+	                            end
+                           
+	                        elseif game:GetService("Workspace").CouncilHouse.Board.SurfaceGui.Prompt.Text == "Should peasants be allowed in town?" then
+                                if peasantsAllowed == true then
+                                    fireproximityprompt(game:GetService("Workspace").CouncilHouse.Yes.ProximityPrompt, 1)
+	                            else
+	                                fireproximityprompt(game:GetService("Workspace").CouncilHouse.No.ProximityPrompt, 1)
+	                            end
+                           
+	                        elseif game:GetService("Workspace").CouncilHouse.Board.SurfaceGui.Prompt.Text == "Should jail time be longer?" then
+                                if jailTimesLong1 == true then
+                                    fireproximityprompt(game:GetService("Workspace").CouncilHouse.Yes.ProximityPrompt, 1)
+	                            else
+	                                fireproximityprompt(game:GetService("Workspace").CouncilHouse.No.ProximityPrompt, 1)
+	                            end
+                           
+	                        elseif game:GetService("Workspace").CouncilHouse.Board.SurfaceGui.Prompt.Text == "Should guards pay taxes?" then
+                                if guardTax1 == true then
+                                    fireproximityprompt(game:GetService("Workspace").CouncilHouse.Yes.ProximityPrompt, 1)
+	                            else
+	                                fireproximityprompt(game:GetService("Workspace").CouncilHouse.No.ProximityPrompt, 1)
+	                            end
+	                        end
+	                        if Noclipping then
+	                            Noclipping:Disconnect()
+                            end
+	                        if vehicleOrHumanoid == "Vehicle" then
+    	                        seat = game.Players.LocalPlayer.Character.Humanoid.SeatPart
+                                vehicleModel = seat.Parent
+                                vehicleModel:SetPrimaryPartCFrame(CFrame.new(324, 51, 430))
+                            elseif vehicleOrHumanoid == "Humanoid" then
+                                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(324, 51, 430)
+                            end 
+                    
+    end
+            if councilAdjourned == true and wasRun == true then 
+                wasRun = false
+                if vehicleOrHumanoid == "Vehicle" then
+                    vehicleModel:SetPrimaryPartCFrame(CFrame.new(347, 51, 431))
+                else 
+                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(347, 51, 431)
+                end
+            end
+end
 function ServerHopz(Decision)
     rejoining = true
     
@@ -321,13 +440,22 @@ local function killPlayer(playerToKill, swordToUse)
 				tool:Activate()
 			end)
 			
-			if killFuncPlayer.Humanoid.Health == 0 or workPlr.Humanoid.Health == 0 then -- stop when ded
+			if killFuncPlayer.Humanoid.Health == 0 or workPlr.Humanoid.Health == 0 or not game.Players:FindFirstChild(playerinPlayers.Name)  then -- stop when ded
 				wasPlayerKilled = true
 				
 				noclip = false
 				game.Players.LocalPlayer.Character.Humanoid:ChangeState(11)
 				plr1 = game.Players.LocalPlayer.Character
-				plr1.HumanoidRootPart.CFrame = CFrame.new(-81, 29, -952) -- change this later to be dependent on team
+				
+				if game.Players.LocalPlayer.Team == game:GetService("Teams").Barbarian then 
+				
+				    plr1.HumanoidRootPart.CFrame = CFrame.new(-81, 29, -952)
+				
+				else
+				    plr1.HumanoidRootPart.CFrame = CFrame.new(-233, -5, 492)
+				end
+				
+				-- change this later to be dependent on team
 				game.Workspace.Camera.CameraSubject = game.Players.LocalPlayer.Character.Humanoid
 			end            
 		end
@@ -544,19 +672,24 @@ function setUpCarAutofarm(bla)
             
             plr1.Humanoid:UnequipTools()
             wait()
+            canRunFarm()
+            
+            if floodActive == true then
+                plr1.HumanoidRootPart.CFrame = CFrame.new(335, 36, -133)
+                repeat wait(0.5) canRunFarm() until floodActive == false 
+            end
             
             if game.Players.LocalPlayer.Backpack:FindFirstChild("Kart") == nil then
-            	wait(0.1)
-            	game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(403.231384, 0.760007024, -128.842789)
+                repeat
             	wait(0.5)
             	game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(403.231384, 0.760007024, -128.842789)
-            	wait(0.5)
-            	game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(403.231384, 0.760007024, -128.842789)
-            	Notify("Autofarm", "Setting up. Please wait...", 6.5)
+                until plr1.Humanoid:GetState() == Enum.HumanoidStateType.Seated
+        	    
+            	Notify("Autofarm", "Setting up. Please wait...\nNote: It's HIGHLY recommended you use this \non a VIP server!\n(Faster cash, less chance of ban)", 6.5)
             end
             
            
-            plr1 = game.Players.LocalPlayer.Character
+            
         	plr1.HumanoidRootPart.CFrame = CFrame.new(335, 36, -133)
         	
         	
@@ -603,13 +736,15 @@ function setUpCarAutofarm(bla)
             wait(1)
             if plr1.Humanoid:GetState() == Enum.HumanoidStateType.Seated then
                 finishedSetUp = true
+            else
+                finishedSetUp = false
             end
             plr1.Humanoid:UnequipTools()
             return finishedSetUp
-        else
-            finishedSetUp = false
-            return finishedSetUp
-        end
+    else
+        finishedSetUp = false
+        return finishedSetUp
+    end
     
 end
 
@@ -711,10 +846,10 @@ function canRunFarm()
     isDead = false
     kartExists = false
     
-    --[[if game.ReplicatedStorage.IsFlooding.Value == true then
+    if game.ReplicatedStorage.IsFlooding.Value == true then
         floodActive = true
 
-    end]]
+    end
     
     if game.Players.LocalPlayer.Character.Humanoid:GetState() ~= Enum.HumanoidStateType.Seated then
         notSeated = true
@@ -750,7 +885,9 @@ local PlayerCategory = FinityWindow:Category("Player")
 local FunctionsCategory = FinityWindow:Category("Functions")
 local AutofarmCategory = FinityWindow:Category("Autofarm")
 local TeleportsCategory = FinityWindow:Category("Teleports")
+local TeamSpecificCategory = FinityWindow:Category("Team-Specific")
 local CreditsCategory = FinityWindow:Category("Credits & Info")
+
 
 
 -- Create sectors for categories
@@ -767,7 +904,7 @@ local DiscordSector = PlayerCategory:Sector("")
 -- FunctionsCategory Sectors
 local SelectPlayer = FunctionsCategory:Sector("Autokill")
 local ScanWeapons = FunctionsCategory:Sector("Scan for Player Weapons")
-
+local placeholderFuncSector = FunctionsCategory:Sector("")
 
 local SpoofSettings = FunctionsCategory:Sector("Spoofing")
 
@@ -779,11 +916,16 @@ local ShopSector1 = TeleportsCategory:Sector("Shops")
 --AutofarmCategory Sectors
 local Autofarm1 = AutofarmCategory:Sector("Kart Autofarm")
 local Autofarm2 = AutofarmCategory:Sector("")
-local AutoArrestSector = FunctionsCategory:Sector("Auto Arrest")
+
 
 -- CreditsCategory Sectors
 local DiscordCredits = CreditsCategory:Sector("Discord")
 local CreditsCredits = CreditsCategory:Sector("Credits")
+
+-- TeamSpecificCategory Sectors
+local AutoVoteSector = TeamSpecificCategory:Sector("Auto-Vote")
+local AutoArrestSector1 = TeamSpecificCategory:Sector("Auto Arrest")
+
 -- Speed
 SpeedSettings:Cheat("Slider", "Sprint Speed (Q)", function(sliderSprint)
 	
@@ -910,6 +1052,10 @@ end, {
 	}
 })
 
+
+SpoofSettings:Cheat("Label", "")
+SpoofSettings:Cheat("Label", "\nSpoof features are clientside only.\nUse them to submit a fake exploit report\non the GRG discord.")
+
 -- Misc Settings
 
 
@@ -990,6 +1136,69 @@ end, {
 SelectPlayer:Cheat("Button", "", function()
 	killPlayer(playerToKill, swordToUse)
 end, "Kill Selected Player")
+
+
+SelectPlayer:Cheat("Label", "")
+SelectPlayer:Cheat("Label", "Kill all players in chosen team")
+
+
+local teamToKill = ""
+SelectPlayer:Cheat("Dropdown", "Select Team", function(Option)
+    if Option == "Leader" then
+        teamToKill = "Leader"
+    elseif Option == "Council Member" then
+        teamToKill = "Council Member"
+    elseif Option == "Landlord" then
+        teamToKill = "Landlord"
+    elseif Option == "Guard" then
+        teamToKill = "Guard"
+    elseif Option == "Jester" then
+        teamToKill = "Jester"
+    elseif Option == "Janitor" then
+        teamToKill = "Janitor"
+    elseif Option == "Civilian" then
+        teamToKill = "Civilian"
+    elseif Option == "Peasant" then
+        teamToKill = "Peasant"
+    elseif Option == "Barbarian" then
+        teamToKill = "Barbarian"
+    elseif Option == "Criminal" then
+        teamToKill = "Criminal"
+    elseif Option == "Spectating" then
+        teamToKill = "Spectating"
+    end
+end, {
+    options = {
+        "Leader",
+        "Council Member",
+        "Landlord",
+        "Guard",
+        "Doctor",
+        "Jester",
+        "Janitor",
+        "Civilian",
+        "Peasant",
+        "Barbarian",
+        "Criminal",
+        "Spectating"
+    }
+})
+
+SelectPlayer:Cheat("Button", "", function()
+    for i, playertarget in pairs(game.Players:GetPlayers()) do
+        if game.Players.LocalPlayer.Character.Humanoid.Health == 0 then break end
+        if playertarget.Name ~= game.Players.LocalPlayer.Name and playertarget.Team.Name == teamToKill then
+            killPlayer(playertarget.Name, swordToUse)
+        end
+        pcall(function()
+            if playertarget.Name ~= game.Players.LocalPlayer.Name and playertarget.Team.Name == teamToKill then
+                killPlayer(playertarget.Name, swordToUse)
+            end
+        end)
+    end
+end, "Kill All Players in Team")
+
+
 
 -- Scan for player Weapons
 
@@ -1124,101 +1333,9 @@ miscPlayer:Cheat(
 
 
 --this isnt close to being finished lol
-AutoArrestSector:Cheat(
-	"Checkbox", -- Type
-	"Enable", -- Name
-	function(autoArrestEnabled) -- Callback function
-	    bla1 = autoArrestEnabled
-	    workPlr = workspace[game.Players.LocalPlayer.Name]
-        plr1 = game.Players.LocalPlayer.Character
-        poopyPlayerFrame = CFrame.new(0,-2.5,1.5)
-        currentPos = game.Players.LocalPlayer.Character.HumanoidRootPart.Position
-        print(1)
-    if bla1 == true and game.Players.LocalPlayer.Team == game:GetService("Teams").Guard then
-        print(2)
-        repeat
-        arrestablePlayersExist = false
-        print(99)
-    	for poop, sock in pairs(game.Players:GetChildren()) do
-        
-            
-            
-            if sock.stats:FindFirstChild("Arrestable") and bla1 ~= false then
-              
-                if sock.stats.Arrestable.Value == true then
-                    
-                     arrestablePlayersExist = true
-                     hasJustRan = true
-                     
-                   
-                        Clip = false
-                        noclip()
-                        
-                        
-                        
-                        sockInWorkspace = game.Workspace[sock.Name]
-                        
-                        if game.Players.LocalPlayer.Backpack:FindFirstChild("Handcuffs") then
-                    		handcuffs = game.Players.LocalPlayer.Backpack["Handcuffs"]
-                    	elseif workPlr:FindFirstChild("Handcuffs") then 
-                    		handcuffs = workPlr["Handcuffs"]
-                    	end
-                    	repeat
-                    	game.Workspace.Camera.CameraSubject = sock.Character.Humanoid
-                        game.Players.LocalPlayer.Character.Humanoid:EquipTool(handcuffs)
-                    	
-            			targetPlayerLocation = CFrame.new(sockInWorkspace.Torso.Position.x, sockInWorkspace.Torso.Position.y, sockInWorkspace.Torso.Position.z)
-            			newtargetPlayerLocation = CFrame.new(targetPlayerLocation.x + poopyPlayerFrame.x, targetPlayerLocation.y + poopyPlayerFrame.y, targetPlayerLocation.z + poopyPlayerFrame.z)
-                       
-            		
-        
-            			game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = newtargetPlayerLocation * CFrame.Angles(math.rad(90),0,0)
-            			
-                        handcuffs:Activate()
-                        wait()
-                        
-                        until sock.stats.Arrestable.Value == false or game.Players.LocalPlayer.Character.Humanoid.Health == 0 or bla1 == false
-                   
-                end
-            end
-        end
-    
-        if arrestablePlayersExist == false then
-            print(5)
-            
-            game.Workspace.Camera.CameraSubject = game.Players.LocalPlayer.Character.Humanoid
-            if hasJustRan == true then
-                hasJustRan = false
-                Clip = true
-                if Noclipping then
-                	Noclipping:Disconnect()
-                end
-                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(currentPos.x, currentPos.y + 8, currentPos.z)
-                print(6)
-                wait(1)
-            end
-        end
-        
-        wait()
-        print(7)
-        until bla1 == false or game.Players.LocalPlayer.Character.Humanoid.Health == 0
-        game.Workspace.Camera.CameraSubject = game.Players.LocalPlayer.Character.Humanoid
-        elseif bla1 == true and game.Players.LocalPlayer.Team ~= game:GetService("Teams").Guard then
-            Notify("Auto Arrest", "You must be guard for this!", 5)
-            game.Workspace.Camera.CameraSubject = game.Players.LocalPlayer.Character.Humanoid
-            print(8)
-        elseif
-            bla1 == false then
-                game.Workspace.Camera.CameraSubject = game.Players.LocalPlayer.Character.Humanoid
-                end
-        
-        print(9)
-	    
-	    
-end)
 
-AutoArrestSector:Cheat("Label", "")
-AutoArrestSector:Cheat("Label", "\nSpoof features are clientside only.\nUse them to submit a fake exploit report\non the GRG discord.")
+
+
 
 TPSector:Cheat("Dropdown", "Town Locations", function(Option)
 	if Option == "Beach" then
@@ -1600,7 +1717,7 @@ DiscordSector:Cheat("Label", "")
 
 Autofarm1:Cheat(
 	"Checkbox", -- Type
-	"Autofarm Enabled", -- Name
+	"Enabled", -- Name
 	
 	function(autofarmEnabled) -- Callback function EZWAYTO
 	   
@@ -1621,8 +1738,12 @@ Autofarm1:Cheat(
                    
                     repeat
                         canRunFarm()
-                        if notSeated == false and floodActive == false and isDead == false and kartExists == true then
+                        if notSeated == false and isDead == false and kartExists == true then
+                            
                             carAutofarm(farmTime)
+                            if game.Players.LocalPlayer.Team == game:GetService("Teams").Leader or game.Players.LocalPlayer.Team == game.Teams["Council Member"] then
+                                AutoVote("Vehicle")
+                            end
                         elseif isDead == true then 
                             finishedSetUp = false
                                 repeat 
@@ -1631,25 +1752,13 @@ Autofarm1:Cheat(
                                     game.ReplicatedStorage.RemoteEvent:FireServer("Respawn")
                                 until game.Players.LocalPlayer.Character.Humanoid.Health > 0
                         
-                        elseif floodActive == true then
+                        --[[elseif floodActive == true then
                             
-                          --placeholder
+                          --placeholder]]
                             
                         elseif notSeated == true then
                           
-                            finishedSetUp = false
-                            --[[if game.Players.LocalPlayer.Character.HumanoidRootPart.Position.y < 33.5 then
-                                
-                                
-                                game.Players.LocalPlayer.Character.Humanoid.Sit = false
-                                plr1 = game.Players.LocalPlayer.Character
-                                wait()
-                            	plr1.HumanoidRootPart.CFrame = CFrame.new(335, 39, -133)
-                            	
-                                
-                            end]]
-                            
-                            
+                            finishedSetUp = false        
                             repeat 
                                
                                 
@@ -1673,6 +1782,7 @@ Autofarm1:Cheat(
                             setUpCarAutofarm(bla)
                             wait(0.5)
                         end
+                        wait()
                     until autofarmEnabled == false or bla == false
                     
                 else
@@ -1712,6 +1822,144 @@ Autofarm2:Cheat("Button", "", function()
     setclipboard("discord.gg/BgaWVXUduZ")
 end, "Copy Discord Invite")
 
+
+--awesex
+AutoVoteSector:Cheat(
+	"Checkbox", -- Type
+	"Enabled", -- Name
+	function(autoVoteEnabled) -- Callback function
+	    isAutoVoteOn = autoVoteEnabled
+	    if game.Players.LocalPlayer.Team == game:GetService("Teams").Leader or game.Players.LocalPlayer.Team == game.Teams["Council Member"] then
+	        
+	        repeat
+	            
+	            AutoVote("Humanoid")
+	        
+	            wait()
+	        until isAutoVoteOn ~= true
+	        
+	    else
+	        Notify("Auto-Vote", "You must be a Leader or Council Member for this!", 5)
+	    end
+	    
+	    
+end)
+AutoVoteSector:Cheat("Label", "")
+AutoVoteSector:Cheat("Label", "Law Settings")
+
+AutoVoteSector:Cheat("Checkbox", "Guards pay taxes", function(guardTax) guardTax1 = guardTax end)
+AutoVoteSector:Cheat("Checkbox", "Peasants allowed in town", function(peasantsAllowed) peasantsAllowed1 = peasantsAllowed end)
+AutoVoteSector:Cheat("Checkbox", "Violence is allowed", function(violenceAllowed) violenceAllowed1 = violenceAllowed end)
+AutoVoteSector:Cheat("Checkbox", "Rioting is allowed", function(riotingAllowed) riotingAllowed1 = riotingAllowed end)
+AutoVoteSector:Cheat("Checkbox", "Only guards can purchase weapons", function(guardsCanPurchaseWeapons) guardsCanPurchaseWeapons1 = guardsCanPurchaseWeapons end)
+AutoVoteSector:Cheat("Checkbox", "Council Members can be arrested", function(councilCanBeArrested) councilCanBeArrested1 = councilCanBeArrested end)
+AutoVoteSector:Cheat("Checkbox", "Council Members pay taxes", function(councilPaysTax) councilPaysTax1 = councilPaysTax end)
+AutoVoteSector:Cheat("Checkbox", "Doctors pay taxes", function(doctorsPayTax) doctorsPayTax1 = doctorsPayTax end)
+AutoVoteSector:Cheat("Checkbox", "Healthcare is free", function(healthcareFree) healthcareFree1 = healthcareFree end)
+AutoVoteSector:Cheat("Checkbox", "Guards can vote (1/2 power)", function(guardsCanVote) guardsCanVote1 = guardsCanVote end)
+AutoVoteSector:Cheat("Checkbox", "Jail times are long", function(jailTimesLong) jailTimesLong1 = jailTimesLong end)
+
+AutoArrestSector1:Cheat(
+	"Checkbox", -- Type
+	"Enabled", -- Name
+	function(autoArrestEnabled) -- Callback function
+	    bla1 = autoArrestEnabled
+	    workPlr = workspace[game.Players.LocalPlayer.Name]
+        plr1 = game.Players.LocalPlayer.Character
+        poopyPlayerFrame = CFrame.new(0,-2.5,1.5)
+        currentPos = game.Players.LocalPlayer.Character.HumanoidRootPart.Position
+       
+    if bla1 == true and game.Players.LocalPlayer.Team == game:GetService("Teams").Guard then
+     
+        repeat
+        arrestablePlayersExist = false
+      
+    	for poop, sock in pairs(game.Players:GetChildren()) do
+        
+            
+            
+            if sock.stats:FindFirstChild("Arrestable") and bla1 ~= false then
+              
+                if sock.stats.Arrestable.Value == true then
+                    
+                     arrestablePlayersExist = true
+                     hasJustRan = true
+                     
+                   
+                        Clip = false
+                        if Noclipping then
+                            Noclipping:Disconnect()
+                        end
+                        noclip()
+                        
+                        
+                        
+                        sockInWorkspace = game.Workspace[sock.Name]
+                        
+                        if game.Players.LocalPlayer.Backpack:FindFirstChild("Handcuffs") then
+                    		handcuffs = game.Players.LocalPlayer.Backpack["Handcuffs"]
+                    	elseif workPlr:FindFirstChild("Handcuffs") then 
+                    		handcuffs = workPlr["Handcuffs"]
+                    	end
+                    	repeat
+                    	game.Workspace.Camera.CameraSubject = sock.Character.Humanoid
+                        game.Players.LocalPlayer.Character.Humanoid:EquipTool(handcuffs)
+                    	
+            			targetPlayerLocation = CFrame.new(sockInWorkspace.Torso.Position.x, sockInWorkspace.Torso.Position.y, sockInWorkspace.Torso.Position.z)
+            			newtargetPlayerLocation = CFrame.new(targetPlayerLocation.x + poopyPlayerFrame.x, targetPlayerLocation.y + poopyPlayerFrame.y, targetPlayerLocation.z + poopyPlayerFrame.z)
+                       
+            		
+        
+            			game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = newtargetPlayerLocation * CFrame.Angles(math.rad(90),0,0)
+            			
+                        handcuffs:Activate()
+                        wait()
+                        
+                        until sock.stats.Arrestable.Value == false or game.Players.LocalPlayer.Character.Humanoid.Health == 0 or bla1 == false
+                   
+                end
+            end
+        end
+    
+        if arrestablePlayersExist == false then
+        
+            
+            game.Workspace.Camera.CameraSubject = game.Players.LocalPlayer.Character.Humanoid
+            if hasJustRan == true then
+                hasJustRan = false
+                wait(0.1)
+                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(currentPos.x, currentPos.y + 16, currentPos.z) * CFrame.Angles(0,0,0)
+                
+                Clip = true
+                if Noclipping then
+                	Noclipping:Disconnect()
+                end
+               
+                wait(1)
+            end
+        end
+        
+        wait()
+      
+        until bla1 == false or game.Players.LocalPlayer.Character.Humanoid.Health == 0
+        game.Workspace.Camera.CameraSubject = game.Players.LocalPlayer.Character.Humanoid
+        Clip = true
+        if Noclipping then
+        	Noclipping:Disconnect()
+        end
+        elseif bla1 == true and game.Players.LocalPlayer.Team ~= game:GetService("Teams").Guard then
+            Notify("Auto Arrest", "You must be guard for this!", 5)
+            game.Workspace.Camera.CameraSubject = game.Players.LocalPlayer.Character.Humanoid
+           
+        elseif
+            bla1 == false then
+                game.Workspace.Camera.CameraSubject = game.Players.LocalPlayer.Character.Humanoid
+                end
+        
+      
+	    
+	    
+end)
 -- Credits category
 DiscordCredits:Cheat("Label", "Bugs? Issues? Want to see the changelog?\nWant to contact me? Join the Discord!")
 DiscordCredits:Cheat("Label", "")
