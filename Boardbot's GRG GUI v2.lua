@@ -118,7 +118,7 @@ function AutoVote(vehicleOrHumanoid)
 	                                fireproximityprompt(game:GetService("Workspace").CouncilHouse.No.ProximityPrompt, 1)
 	                            end
                            
-	                        elseif game:GetService("Workspace").CouncilHouse.Board.SurfaceGui.Prompt.Text == "Should peasants be allowed in town?" then
+	                        elseif game:GetService("Workspace").CouncilHouse.Board.SurfaceGui.Prompt.Text == "Should peasants be allowed in the town?" then
                                 if peasantsAllowed == true then
                                     fireproximityprompt(game:GetService("Workspace").CouncilHouse.Yes.ProximityPrompt, 1)
 	                            else
