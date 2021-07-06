@@ -1,5 +1,5 @@
 --[[
-Boardbot's Generic Roleplay Gaem GUI v2.4
+Boardbot's Generic Roleplay Gaem GUI v2.42
 
 Contact me here: Boardbot#7385
 Join the discord: discord.gg/BgaWVXUduZ
@@ -440,7 +440,7 @@ local function killPlayer(playerToKill, swordToUse)
 				tool:Activate()
 			end)
 			
-			if killFuncPlayer.Humanoid.Health == 0 or workPlr.Humanoid.Health == 0 or not game.Players:FindFirstChild(playerinPlayers.Name)  then -- stop when ded
+			if killFuncPlayer.Humanoid.Health == 0 or workPlr.Humanoid.Health == 0 or not game.Players:FindFirstChild(playerinPlayers.Name) or game.Players[playerToKill].Character.Humanoid.Health == 0 then -- stop when ded
 				wasPlayerKilled = true
 				
 				noclip = false
@@ -1166,6 +1166,8 @@ SelectPlayer:Cheat("Dropdown", "Select Team", function(Option)
         teamToKill = "Criminal"
     elseif Option == "Spectating" then
         teamToKill = "Spectating"
+    elseif Option == "Doctor" then
+        teamToKill = "Doctor"
     end
 end, {
     options = {
@@ -1185,11 +1187,16 @@ end, {
 })
 
 SelectPlayer:Cheat("Button", "", function()
+    
+    if teamToKill == nil or teamToKill == "Leader" or not teamToKill or teamToKill == "" then
+        teamToKill = "Leader"
+    end
+    
     for i, playertarget in pairs(game.Players:GetPlayers()) do
         if game.Players.LocalPlayer.Character.Humanoid.Health == 0 then break end
-        if playertarget.Name ~= game.Players.LocalPlayer.Name and playertarget.Team.Name == teamToKill then
+        --[[if playertarget.Name ~= game.Players.LocalPlayer.Name and playertarget.Team.Name == teamToKill then
             killPlayer(playertarget.Name, swordToUse)
-        end
+        end]]
         pcall(function()
             if playertarget.Name ~= game.Players.LocalPlayer.Name and playertarget.Team.Name == teamToKill then
                 killPlayer(playertarget.Name, swordToUse)
@@ -1198,8 +1205,14 @@ SelectPlayer:Cheat("Button", "", function()
     end
 end, "Kill All Players in Team")
 
+SelectPlayer:Cheat("Label", "")
 
-
+SelectPlayer:Cheat("Label", "")
+SelectPlayer:Cheat("Label", "")
+SelectPlayer:Cheat("Label", "")
+SelectPlayer:Cheat("Label", "")
+SelectPlayer:Cheat("Label", "")
+SelectPlayer:Cheat("Label", "")
 -- Scan for player Weapons
 
 bruhMomento = nil
