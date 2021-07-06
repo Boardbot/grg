@@ -46,7 +46,8 @@ function AutoVote(vehicleOrHumanoid)
                         councilAdjourned = false
                         Clip = false
                         noclip()
-	                   if vehicleOrHumanoid == "Vehicle" then
+                        canRunFarm()
+	                   if vehicleOrHumanoid == "Vehicle" and isDead == false and notSeated == false then
 	                       seat = game.Players.LocalPlayer.Character.Humanoid.SeatPart
                             vehicleModel = seat.Parent
                             vehicleModel:SetPrimaryPartCFrame(CFrame.new(324, 51, 430))
@@ -152,7 +153,8 @@ function AutoVote(vehicleOrHumanoid)
     end
             if councilAdjourned == true and wasRun == true then 
                 wasRun = false
-                if vehicleOrHumanoid == "Vehicle" then
+                canRunFarm()
+                if vehicleOrHumanoid == "Vehicle" and isDead == false and notSeated == false then
                     vehicleModel:SetPrimaryPartCFrame(CFrame.new(347, 51, 431))
                 else 
                     game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(347, 51, 431)
