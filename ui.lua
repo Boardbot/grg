@@ -172,7 +172,7 @@ function finity.new(isdark, gprojectName, thinProject)
 		finityData.ToggleKey = NewKey
 		
 		if not projectName then
-			self2.tip.Text = "Boardbot's GRG GUI v2.41"
+			self2.tip.Text = "Boardbot's GRG GUI v2.42"
 		end
 		
 		if finityData.UpConnection then
