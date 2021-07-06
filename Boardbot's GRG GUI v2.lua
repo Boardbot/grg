@@ -1,5 +1,5 @@
 --[[
-Boardbot's Generic Roleplay Gaem GUI v2.42
+Boardbot's Generic Roleplay Gaem GUI v2.43
 
 Contact me here: Boardbot#7385
 Join the discord: discord.gg/BgaWVXUduZ
@@ -142,7 +142,7 @@ function AutoVote(vehicleOrHumanoid)
 	                        if Noclipping then
 	                            Noclipping:Disconnect()
                             end
-	                        if vehicleOrHumanoid == "Vehicle" then
+	                        if vehicleOrHumanoid == "Vehicle" and isDead == false and notSeated == false then
     	                        seat = game.Players.LocalPlayer.Character.Humanoid.SeatPart
                                 vehicleModel = seat.Parent
                                 vehicleModel:SetPrimaryPartCFrame(CFrame.new(324, 51, 430))
@@ -1822,7 +1822,7 @@ end
 
 Autofarm1:Cheat("Slider", "Autofarm Speed", function(laTime)
 	farmTime = 1 / laTime
-end, {min = 6, max = 11, suffix = " nodes / sec"})
+end, {min = 6, max = 15, suffix = " nodes / sec"})
 
 Autofarm1:Cheat("Label", "Recommended Autofarm Speed: 9 - 9.8")
 Autofarm2:Cheat("Label", "")
