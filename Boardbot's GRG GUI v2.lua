@@ -1822,9 +1822,9 @@ end
 
 Autofarm1:Cheat("Slider", "Autofarm Speed", function(laTime)
 	farmTime = 1 / laTime
-end, {min = 6, max = 15, suffix = " nodes / sec"})
+end, {min = 7, max = 11, suffix = " nodes / sec"})
 
-Autofarm1:Cheat("Label", "Recommended Autofarm Speed: 9 - 9.8")
+Autofarm1:Cheat("Label", "Recommended Autofarm Speed: 9.4 - 9.8")
 Autofarm2:Cheat("Label", "")
 Autofarm2:Cheat("Label", "The autofarm is ping-dependent, so speeds above 9\nmay not register for some users.\n\nPlay around with the speed\nto see what works best.")
 
