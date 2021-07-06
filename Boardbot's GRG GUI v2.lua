@@ -884,8 +884,8 @@ FinityWindow.ChangeToggleKey(Enum.KeyCode.RightControl)
 local PlayerCategory = FinityWindow:Category("Player")
 local FunctionsCategory = FinityWindow:Category("Functions")
 local AutofarmCategory = FinityWindow:Category("Autofarm")
-local TeleportsCategory = FinityWindow:Category("Teleports")
 local TeamSpecificCategory = FinityWindow:Category("Team-Specific")
+local TeleportsCategory = FinityWindow:Category("Teleports")
 local CreditsCategory = FinityWindow:Category("Credits & Info")
 
 
@@ -914,7 +914,7 @@ local ShopSector2 = TeleportsCategory:Sector("")
 local ShopSector1 = TeleportsCategory:Sector("Shops")
 
 --AutofarmCategory Sectors
-local Autofarm1 = AutofarmCategory:Sector("Kart Autofarm")
+local Autofarm1 = AutofarmCategory:Sector("Autofarm")
 local Autofarm2 = AutofarmCategory:Sector("")
 
 
@@ -1823,12 +1823,15 @@ Autofarm2:Cheat("Button", "", function()
 end, "Copy Discord Invite")
 
 
---awesex
 AutoVoteSector:Cheat(
 	"Checkbox", -- Type
 	"Enabled", -- Name
 	function(autoVoteEnabled) -- Callback function
 	    isAutoVoteOn = autoVoteEnabled
+	    
+	    if bla == true then
+	        Notify("Autovote", "You already enabled Autofarm!\n(Autovote is automatically enabled\nwhen you enable Autofarm", 7)
+	   else
 	    if game.Players.LocalPlayer.Team == game:GetService("Teams").Leader or game.Players.LocalPlayer.Team == game.Teams["Council Member"] then
 	        
 	        repeat
@@ -1841,7 +1844,7 @@ AutoVoteSector:Cheat(
 	    else
 	        Notify("Auto-Vote", "You must be a Leader or Council Member for this!", 5)
 	    end
-	    
+	    end
 	    
 end)
 AutoVoteSector:Cheat("Label", "")
