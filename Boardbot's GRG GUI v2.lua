@@ -355,6 +355,7 @@ local function killPlayer(playerToKill, swordToUse)
 	wasPlayerKilled = false
 	workPlr = workspace[game.Players.LocalPlayer.Name]
 	poopyFrame = Vector3.new(0,-4,1.5)
+	rotateAngle = Vector3.new(0,999999,0)
 	
 	if swordToUse and swordToUse ~= "Autoselect" then
 	    tool = swordToUse
@@ -437,7 +438,7 @@ local function killPlayer(playerToKill, swordToUse)
 
 			newtargetPlayerLocation = targetPlayerLocation + poopyPlayerFrame
 
-			rotateAngle = Vector3.new(0,999999,0)
+			
 			game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(newtargetPlayerLocation, rotateAngle)
 			
 			tool.Equipped:Connect(function()    
@@ -447,22 +448,23 @@ local function killPlayer(playerToKill, swordToUse)
 			if killFuncPlayer.Humanoid.Health == 0 or workPlr.Humanoid.Health == 0 or not game.Players:FindFirstChild(playerinPlayers.Name) or game.Players[playerToKill].Character.Humanoid.Health == 0 then -- stop when ded
 				wasPlayerKilled = true
 				
-				noclip = false
-				game.Players.LocalPlayer.Character.Humanoid:ChangeState(11)
-				plr1 = game.Players.LocalPlayer.Character
 				
-				if game.Players.LocalPlayer.Team == game:GetService("Teams").Barbarian then 
-				
-				    plr1.HumanoidRootPart.CFrame = CFrame.new(-81, 29, -952)
-				
-				else
-				    plr1.HumanoidRootPart.CFrame = CFrame.new(-233, -5, 492)
-				end
-				
-				-- change this later to be dependent on team
-				game.Workspace.Camera.CameraSubject = game.Players.LocalPlayer.Character.Humanoid
 			end            
 		end
+		noclip = false
+		game.Players.LocalPlayer.Character.Humanoid:ChangeState(11)
+		plr1 = game.Players.LocalPlayer.Character
+		
+		if game.Players.LocalPlayer.Team == game:GetService("Teams").Barbarian then 
+		
+		    plr1.HumanoidRootPart.CFrame = CFrame.new(-81, 29, -952)
+		
+		else
+		    plr1.HumanoidRootPart.CFrame = CFrame.new(-233, -5, 492)
+		end
+		
+		-- change this later to be dependent on team
+		game.Workspace.Camera.CameraSubject = game.Players.LocalPlayer.Character.Humanoid
 	end
 end
 
