@@ -1,5 +1,5 @@
 --[[
-Boardbot's Generic Roleplay Gaem GUI v2.43
+Boardbot's Generic Roleplay Gaem GUI v2.44
 
 Contact me here: Boardbot#7385
 Join the discord: discord.gg/BgaWVXUduZ
@@ -432,7 +432,9 @@ local function killPlayer(playerToKill, swordToUse)
 			end
 			
 			poopyPlayerFrame = Vector3.new(0,killHeight,1.5)
-			targetPlayerLocation = Vector3.new(killFuncPlayer.Torso.Position.x, killFuncPlayer.Torso.Position.y, killFuncPlayer.Torso.Position.z)
+			velocityPlayer = killFuncPlayer.Torso.Velocity
+            targetPlayerLocation = Vector3.new(killFuncPlayer.Torso.Position.x + (velocityPlayer.x * predIntensity), killFuncPlayer.Torso.Position.y, killFuncPlayer.Torso.Position.z + (velocityPlayer.z * predIntensity))
+
 			newtargetPlayerLocation = targetPlayerLocation + poopyPlayerFrame
 
 			rotateAngle = Vector3.new(0,999999,0)
@@ -916,7 +918,7 @@ local ShopSector2 = TeleportsCategory:Sector("")
 local ShopSector1 = TeleportsCategory:Sector("Shops")
 
 --AutofarmCategory Sectors
-local Autofarm1 = AutofarmCategory:Sector("Autofarm")
+local Autofarm1 = AutofarmCategory:Sector("Autofarm Settings")
 local Autofarm2 = AutofarmCategory:Sector("")
 
 
@@ -925,8 +927,8 @@ local DiscordCredits = CreditsCategory:Sector("Discord")
 local CreditsCredits = CreditsCategory:Sector("Credits")
 
 -- TeamSpecificCategory Sectors
-local AutoVoteSector = TeamSpecificCategory:Sector("Auto-Vote")
-local AutoArrestSector1 = TeamSpecificCategory:Sector("Auto Arrest")
+local AutoVoteSector = TeamSpecificCategory:Sector("Auto-Vote (Leader / Council Member only)")
+local AutoArrestSector1 = TeamSpecificCategory:Sector("Auto Arrest (Guard only)")
 
 -- Speed
 SpeedSettings:Cheat("Slider", "Sprint Speed (Q)", function(sliderSprint)
@@ -1082,6 +1084,15 @@ SelectPlayer:Cheat("Slider", "Kill Height", function(h)
 	killHeight = h
 end, {min = -12, max = 0, suffix = " studs"})
 
+predIntensity = 0.1
+
+SelectPlayer:Cheat("Slider", "Prediction Intensity", function(pred)
+	predIntensity = (pred / 100) / 2
+end, {min = 0.1, max = 100, suffix = " %"})
+
+SelectPlayer:Cheat("Label", "Adjust the prediction intensity\naccording to your ping to\nincrease autokill effectiveness")
+
+
 SelectPlayer:Cheat("Dropdown", "Sword to Use", function(Option)
     
     
@@ -1134,6 +1145,8 @@ end, {
     	"Basic Sword"
 	}
 })
+
+
 
 SelectPlayer:Cheat("Button", "", function()
 	killPlayer(playerToKill, swordToUse)
@@ -1195,15 +1208,19 @@ SelectPlayer:Cheat("Button", "", function()
     end
     
     for i, playertarget in pairs(game.Players:GetPlayers()) do
-        if game.Players.LocalPlayer.Character.Humanoid.Health == 0 then break end
-        --[[if playertarget.Name ~= game.Players.LocalPlayer.Name and playertarget.Team.Name == teamToKill then
-            killPlayer(playertarget.Name, swordToUse)
-        end]]
-        pcall(function()
-            if playertarget.Name ~= game.Players.LocalPlayer.Name and playertarget.Team.Name == teamToKill then
+        if game.Players:FindFirstChild(playertarget.Name) then
+            if game.Players.LocalPlayer.Character.Humanoid.Health == 0 then break end
+            --[[if playertarget.Name ~= game.Players.LocalPlayer.Name and playertarget.Team.Name == teamToKill then
                 killPlayer(playertarget.Name, swordToUse)
-            end
-        end)
+            end]]
+            
+            
+            pcall(function()
+                if playertarget.Name ~= game.Players.LocalPlayer.Name and playertarget.Team.Name == teamToKill then
+                    killPlayer(playertarget.Name, swordToUse)
+                end
+            end)
+        end
     end
 end, "Kill All Players in Team")
 
@@ -1820,9 +1837,13 @@ end
 	
 )
 
+
+
+
+farmtime = 9.6
 Autofarm1:Cheat("Slider", "Autofarm Speed", function(laTime)
 	farmTime = 1 / laTime
-end, {min = 7, max = 11, suffix = " nodes / sec"})
+end, {min = 3.2, max = 16, suffix = " nodes / sec"})
 
 Autofarm1:Cheat("Label", "Recommended Autofarm Speed: 9.4 - 9.8")
 Autofarm2:Cheat("Label", "")
@@ -1884,16 +1905,13 @@ AutoArrestSector1:Cheat(
 	    bla1 = autoArrestEnabled
 	    workPlr = workspace[game.Players.LocalPlayer.Name]
         plr1 = game.Players.LocalPlayer.Character
-        poopyPlayerFrame = CFrame.new(0,-2.5,1.5)
-        currentPos = game.Players.LocalPlayer.Character.HumanoidRootPart.Position
        
     if bla1 == true and game.Players.LocalPlayer.Team == game:GetService("Teams").Guard then
-     
         repeat
         arrestablePlayersExist = false
       
     	for poop, sock in pairs(game.Players:GetChildren()) do
-        
+            
             
             
             if sock.stats:FindFirstChild("Arrestable") and bla1 ~= false then
@@ -1904,15 +1922,15 @@ AutoArrestSector1:Cheat(
                      hasJustRan = true
                      
                    
-                        Clip = false
+                        --[[Clip = false
                         if Noclipping then
                             Noclipping:Disconnect()
                         end
-                        noclip()
+                        noclip()]]
                         
                         
                         
-                        sockInWorkspace = game.Workspace[sock.Name]
+                        
                         
                         if game.Players.LocalPlayer.Backpack:FindFirstChild("Handcuffs") then
                     		handcuffs = game.Players.LocalPlayer.Backpack["Handcuffs"]
@@ -1920,21 +1938,26 @@ AutoArrestSector1:Cheat(
                     		handcuffs = workPlr["Handcuffs"]
                     	end
                     	repeat
-                    	game.Workspace.Camera.CameraSubject = sock.Character.Humanoid
+                    	sock.Character.HumanoidRootPart.CanCollide = false
+                    	sock.Character.HumanoidRootPart.Size = Vector3.new(4000, 4000, 4000)
+                    	
+                    
                         game.Players.LocalPlayer.Character.Humanoid:EquipTool(handcuffs)
                     	
-            			targetPlayerLocation = CFrame.new(sockInWorkspace.Torso.Position.x, sockInWorkspace.Torso.Position.y, sockInWorkspace.Torso.Position.z)
-            			newtargetPlayerLocation = CFrame.new(targetPlayerLocation.x + poopyPlayerFrame.x, targetPlayerLocation.y + poopyPlayerFrame.y, targetPlayerLocation.z + poopyPlayerFrame.z)
+            			
                        
             		
         
-            			game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = newtargetPlayerLocation * CFrame.Angles(math.rad(90),0,0)
+            		
             			
                         handcuffs:Activate()
                         wait()
                         
-                        until sock.stats.Arrestable.Value == false or game.Players.LocalPlayer.Character.Humanoid.Health == 0 or bla1 == false
-                   
+                    	until sock.stats.Arrestable.Value == false or game.Players.LocalPlayer.Character.Humanoid.Health == 0 or bla1 == false
+                    	
+                        sock.Character.HumanoidRootPart.Size = Vector3.new(2, 2, 1)
+                        sock.Character.HumanoidRootPart.CanCollide = true
+                    	
                 end
             end
         end
@@ -1942,16 +1965,13 @@ AutoArrestSector1:Cheat(
         if arrestablePlayersExist == false then
         
             
-            game.Workspace.Camera.CameraSubject = game.Players.LocalPlayer.Character.Humanoid
+           
             if hasJustRan == true then
                 hasJustRan = false
                 wait(0.1)
-                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(currentPos.x, currentPos.y + 16, currentPos.z) * CFrame.Angles(0,0,0)
+                --game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(currentPos.x, currentPos.y + 16, currentPos.z) * CFrame.Angles(0,0,0)
                 
-                Clip = true
-                if Noclipping then
-                	Noclipping:Disconnect()
-                end
+                
                
                 wait(1)
             end
@@ -1960,18 +1980,18 @@ AutoArrestSector1:Cheat(
         wait()
       
         until bla1 == false or game.Players.LocalPlayer.Character.Humanoid.Health == 0
-        game.Workspace.Camera.CameraSubject = game.Players.LocalPlayer.Character.Humanoid
+        
         Clip = true
         if Noclipping then
         	Noclipping:Disconnect()
         end
         elseif bla1 == true and game.Players.LocalPlayer.Team ~= game:GetService("Teams").Guard then
             Notify("Auto Arrest", "You must be guard for this!", 5)
-            game.Workspace.Camera.CameraSubject = game.Players.LocalPlayer.Character.Humanoid
+            
            
         elseif
             bla1 == false then
-                game.Workspace.Camera.CameraSubject = game.Players.LocalPlayer.Character.Humanoid
+                
                 end
         
       
