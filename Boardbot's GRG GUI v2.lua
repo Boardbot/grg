@@ -27,7 +27,7 @@ end)
 local UserInputService = game:GetService('UserInputService')
 sprintSpeed = 24
 walkSpeed = 16
-farmTime = 0.35
+farmTime = 1 / 9.6
 killHeight = -7
 swordToUse = nil
 back = CFrame.Angles(0, math.rad(0), 0)
@@ -775,7 +775,7 @@ function carAutofarm(time)
     
     canRunFarm()
     
-    
+        
         --if notSeated == false and floodActive == false and isDead == false then
                 wait(time)
         if game.Workspace.Karts:FindFirstChild(game.Players.LocalPlayer.Name) then
