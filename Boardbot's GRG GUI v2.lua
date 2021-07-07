@@ -1090,7 +1090,7 @@ SelectPlayer:Cheat("Slider", "Prediction Intensity", function(pred)
 	predIntensity = (pred / 100) / 2
 end, {min = 0.1, max = 100, suffix = " %"})
 
-SelectPlayer:Cheat("Label", "Adjust the prediction intensity\naccording to your ping to\nincrease autokill effectiveness")
+SelectPlayer:Cheat("Label", "Adjust the prediction intensity to increase autokill effectiveness")
 
 
 SelectPlayer:Cheat("Dropdown", "Sword to Use", function(Option)
