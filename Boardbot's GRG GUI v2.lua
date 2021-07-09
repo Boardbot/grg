@@ -1,5 +1,5 @@
 --[[
-Boardbot's Generic Roleplay Gaem GUI v2.44
+Boardbot's Generic Roleplay Gaem GUI v2.45
 
 Contact me here: Boardbot#7385
 Join the discord: discord.gg/BgaWVXUduZ
@@ -47,12 +47,12 @@ function AutoVote(vehicleOrHumanoid)
                         Clip = false
                         noclip()
                         canRunFarm()
-	                   if vehicleOrHumanoid == "Vehicle" and isDead == false and notSeated == false then
+	                   if vehicleOrHumanoid == "Vehicle" and isDead == false and notSeated == false and kartExists == true then
 	                       seat = game.Players.LocalPlayer.Character.Humanoid.SeatPart
                             vehicleModel = seat.Parent
-                            vehicleModel:SetPrimaryPartCFrame(CFrame.new(324, 51, 430))
+                            vehicleModel:SetPrimaryPartCFrame(CFrame.new(339, 58, 430))
                         elseif vehicleOrHumanoid == "Humanoid" then
-                            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(324, 51, 430)
+                            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(339, 58, 430)
 	                   end
 	                   
 	                   
@@ -142,24 +142,24 @@ function AutoVote(vehicleOrHumanoid)
 	                        if Noclipping then
 	                            Noclipping:Disconnect()
                             end
-	                        if vehicleOrHumanoid == "Vehicle" and isDead == false and notSeated == false then
+	                        if vehicleOrHumanoid == "Vehicle" and isDead == false and notSeated == false and kartExists == true then
     	                        seat = game.Players.LocalPlayer.Character.Humanoid.SeatPart
                                 vehicleModel = seat.Parent
-                                vehicleModel:SetPrimaryPartCFrame(CFrame.new(324, 51, 430))
+                                vehicleModel:SetPrimaryPartCFrame(CFrame.new(339, 58, 430))
                             elseif vehicleOrHumanoid == "Humanoid" then
-                                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(324, 51, 430)
+                                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(339, 58, 430)
                             end 
                     
     end
-            if councilAdjourned == true and wasRun == true then 
+            --[[if councilAdjourned == true and wasRun == true then 
                 wasRun = false
                 canRunFarm()
                 if vehicleOrHumanoid == "Vehicle" and isDead == false and notSeated == false then
-                    vehicleModel:SetPrimaryPartCFrame(CFrame.new(347, 51, 431))
+                    
                 else 
-                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(347, 51, 431)
+                    
                 end
-            end
+            end]]
 end
 function ServerHopz(Decision)
     rejoining = true
@@ -655,9 +655,22 @@ end
 -- Setup Autofarm function 
 
 function setUpCarAutofarm(bla)
+        
+            
         if bla ~= false then
             
             finishedSetUp = false
+            
+            if game.Players.LocalPlayer.stats.Hunger.Value < 25 then
+                game.Players.LocalPlayer.Character.Humanoid.Health = 0
+                
+                repeat          
+                    wait(2) 
+                    game.ReplicatedStorage.RemoteEvent:FireServer("Respawn")
+                until game.Players.LocalPlayer.Character.Humanoid.Health > 0
+            end
+        
+            game.Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart", 30)
             
             
             workPlr = game.Workspace[game.Players.LocalPlayer.Name]
@@ -728,11 +741,6 @@ function setUpCarAutofarm(bla)
         
             
             
-            repeat
-                if vehicleModel.ClassName ~= "Model" then
-                	vehicleModel = vehicleModel.Parent
-                end
-            until vehicleModel.ClassName == "Model"
             wait(0.1)
             
            
@@ -947,10 +955,7 @@ UserInputService.InputBegan:Connect(function(inputObject, gameProcessedEvent)
 				
     
 	local isQHeld = UserInputService:IsKeyDown(Enum.KeyCode.Q)
-	local isWHeld = UserInputService:IsKeyDown(Enum.KeyCode.W)
-	local isAHeld = UserInputService:IsKeyDown(Enum.KeyCode.A)
-	local isSHeld = UserInputService:IsKeyDown(Enum.KeyCode.S)
-	local isDHeld = UserInputService:IsKeyDown(Enum.KeyCode.D)
+
 	
 	
 	if gameProcessedEvent == true then
@@ -958,12 +963,11 @@ UserInputService.InputBegan:Connect(function(inputObject, gameProcessedEvent)
 		if isQHeld == true then
 			game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = sprintSpeed
 		end
-		wait(0.5) -- WHY IS WAIT HERE??
+		
 	end
 	
 	if isQHeld == false and gameProcessedEvent == false then 
 		game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = walkSpeed
-		wait(0.5)
 		
 	end
 end)
@@ -1220,6 +1224,7 @@ SelectPlayer:Cheat("Button", "", function()
             pcall(function()
                 if playertarget.Name ~= game.Players.LocalPlayer.Name and playertarget.Team.Name == teamToKill then
                     killPlayer(playertarget.Name, swordToUse)
+                    wait(0.5)
                 end
             end)
         end
@@ -1765,6 +1770,7 @@ Autofarm1:Cheat(
     		    
     		    Notify("Autofarm", "You need at least $100 starting cash for this!", 5)
     		else
+    		    game.Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart", 31)
                 setUpCarAutofarm(bla)
         	
         		
@@ -1799,6 +1805,7 @@ Autofarm1:Cheat(
                                 wait(0.4)
                                 game.Players.LocalPlayer.Character.Humanoid.Sit = false
                                 game.Players.LocalPlayer.Character.Humanoid:UnequipTools()
+                                game.Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart", 31)
                                 setUpCarAutofarm(true)
                                 wait(0.4)
                             until game.Players.LocalPlayer.Character.Humanoid:GetState() == Enum.HumanoidStateType.Seated
@@ -1813,6 +1820,7 @@ Autofarm1:Cheat(
                         
                         
                         if finishedSetUp == false then
+                            game.Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart", 31)
                             setUpCarAutofarm(bla)
                             wait(0.5)
                         end
