@@ -1745,12 +1745,12 @@ end, "Rejoin Server")
 
 ServerHop:Cheat("Label", "")
 MiscSector:Cheat("Label", "")
-ServerHop:Cheat("Label", "\n\nHave problems? Want updates? Join the Discord!\n\ndiscord.gg/BgaWVXUduZ")
+--[[ServerHop:Cheat("Label", "\n\nHave problems? Want updates? Join the Discord!\n\ndiscord.gg/BgaWVXUduZ")
 ServerHop:Cheat("Button", "Discord", function()
     setclipboard("discord.gg/BgaWVXUduZ")
 end, "Copy Discord Invite")
 
-DiscordSector:Cheat("Label", "")
+DiscordSector:Cheat("Label", "")]]
 
 --AutofarmCategory stuff
 
@@ -1862,12 +1862,12 @@ Autofarm2:Cheat("Label", "The autofarm is ping-dependent, so speeds above 9\nmay
 Autofarm2:Cheat("Label", "")
 Autofarm2:Cheat("Label", "\n\n\nHighly recommended to use on VIP servers.\nVIP servers are FREE.")
 Autofarm2:Cheat("Label", "")
-Autofarm2:Cheat("Label", "\n\n\n\nJoin the Discord!")
+--[[Autofarm2:Cheat("Label", "\n\n\n\nJoin the Discord!")
 
 Autofarm2:Cheat("Button", "", function()
     setclipboard("discord.gg/BgaWVXUduZ")
 end, "Copy Discord Invite")
-
+]]
 
 AutoVoteSector:Cheat(
 	"Checkbox", -- Type
@@ -2009,12 +2009,12 @@ AutoArrestSector1:Cheat(
 	    
 end)
 -- Credits category
-DiscordCredits:Cheat("Label", "Bugs? Issues? Want to see the changelog?\nWant to contact me? Join the Discord!")
+DiscordCredits:Cheat("Label", "\nBugs? Issues? Want to see the changelog?\nWant to contact me? Add me on Discord!\nBoardbot#7385")
 DiscordCredits:Cheat("Label", "")
-DiscordCredits:Cheat("Button", "", function()
+--[[DiscordCredits:Cheat("Button", "", function()
     setclipboard("discord.gg/BgaWVXUduZ")
 end, "Copy Discord Invite")
-
+]]
 CreditsCredits:Cheat("Label", "Everything in this menu is\ncreated by Boardbot")
 CreditsCredits:Cheat("Label", "")
 CreditsCredits:Cheat("Label", "Contact me on Discord: Boardbot#7385")
