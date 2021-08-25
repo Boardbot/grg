@@ -1744,6 +1744,9 @@ ServerHop:Cheat("Button", "", function()
 end, "Rejoin Server")
 
 ServerHop:Cheat("Label", "")
+ServerHop:Cheat("Label", "")
+
+ServerHop:Cheat("Label", "GUI Toggle: Right Control")
 MiscSector:Cheat("Label", "")
 --[[ServerHop:Cheat("Label", "\n\nHave problems? Want updates? Join the Discord!\n\ndiscord.gg/BgaWVXUduZ")
 ServerHop:Cheat("Button", "Discord", function()
