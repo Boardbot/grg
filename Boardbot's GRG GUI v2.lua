@@ -1,16 +1,7 @@
---[[
-Boardbot's Generic Roleplay Gaem GUI v2.45
 
-Contact me here: Boardbot#7385
-Join the discord: discord.gg/BgaWVXUduZ
-
-when will he learn!
---]]
 
 
 -- **IF YOU USE ANY OF THIS CODE IN YOUR SCRIPT, CREDIT ME.**
--- Boardbot#7385
--- https://v3rmillion.net/member.php?action=profile&uid=1389477
 -- enjoy
 -- my code is shit, just a forewarning
 
