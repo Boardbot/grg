@@ -508,6 +508,8 @@ function Notify(titletxt, text, time)
     GUI:Destroy();
 end
 
+Notify("Warning: Script detected", "The anticheat has been updated, use the script at your own risk.", 20)
+
 function WeaponsGUI(titletxt, text)
     
     local GUI = Instance.new("ScreenGui")
